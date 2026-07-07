@@ -1,124 +1,141 @@
-# Sobre Mí
+<p align="center">
+  <img src="profile.jpg" width="180" alt="Lenin Fernando Jiménez Herrera">
+</p>
 
-## Perfil Profesional
+<h1 align="center">Lenin Fernando Jiménez Herrera</h1>
 
-Soy **Lenin Fernando Jiménez Herrera**, profesional de Tecnologías de la Información con más de **15 años de experiencia** en infraestructura tecnológica, soporte TI, administración de sistemas y redes.
+<p align="center">
 
-A lo largo de mi carrera he participado en la implementación, administración y soporte de plataformas Microsoft, administración de servidores, redes corporativas y servicios de TI, desarrollando una sólida base técnica que hoy complemento con una especialización práctica en **Cybersecurity**.
+**SOC Analyst • SIEM Analyst • Blue Team • Threat Hunting • Detection Engineering • Incident Response**
 
-Actualmente mi enfoque profesional está orientado al **Blue Team**, fortaleciendo mis conocimientos mediante el diseño y operación de un laboratorio propio donde implemento escenarios reales de monitoreo, detección e investigación de amenazas utilizando herramientas ampliamente utilizadas en la industria.
-
----
-
-# Objetivo Profesional
-
-Mi objetivo es desarrollarme profesionalmente en las áreas de:
-
-- SOC Analyst (Tier 1 / Tier 2)
-- Threat Hunting
-- Detection Engineering
-- Incident Response
-- SIEM Administration
-- Blue Team Operations
-
-Busco aportar una combinación de experiencia en infraestructura TI y conocimientos especializados en ciberseguridad defensiva, contribuyendo a la mejora continua de los procesos de monitoreo, detección y respuesta ante incidentes.
+</p>
 
 ---
 
-# Experiencia Técnica
+# Sobre mí
 
-Durante mi trayectoria profesional he adquirido experiencia en:
+Soy un profesional de Tecnologías de la Información con más de **15 años de experiencia** en infraestructura tecnológica, soporte, administración de sistemas y redes.
 
-## Infraestructura TI
+Actualmente me especializo en **ciberseguridad defensiva**, desarrollando competencias prácticas en **SOC Operations**, **Threat Hunting**, **Detection Engineering** e **Incident Response**, mediante laboratorios propios orientados a escenarios reales.
 
-- Administración de servidores Windows
-- Administración de Microsoft 365
-- Active Directory
-- Redes LAN/WAN
-- Virtualización
-- Administración de estaciones de trabajo
-- Soporte técnico N1 / N2
-- Administración de usuarios y permisos
+Mi enfoque profesional está orientado al monitoreo de seguridad, análisis de eventos, investigación de amenazas, desarrollo de reglas de detección y mejora continua de las capacidades defensivas de una organización.
 
-## Cybersecurity
+---
 
-- Wazuh SIEM
+# Perfil Profesional
+
+Mi objetivo es desarrollar una carrera profesional dentro de equipos **SOC** y **Blue Team**, participando en actividades relacionadas con:
+
 - Security Monitoring
+- SIEM Administration
 - Threat Hunting
 - Detection Engineering
 - Incident Response
-- MITRE ATT&CK
-- Sysmon
-- Sigma Rules
-- Análisis de eventos de Windows y Linux
+- Security Operations
+- Log Analysis
+- Event Correlation
+
+Este portafolio documenta mi evolución profesional mediante laboratorios, investigaciones y proyectos desarrollados sobre un entorno propio basado en **Wazuh SIEM**.
 
 ---
 
-# Tecnologías
+# Competencias Técnicas
+
+## SOC Operations
+
+- Alert Monitoring
+- Alert Triage
+- Event Analysis
+- Incident Classification
+- Log Correlation
+
+---
+
+## Threat Hunting
+
+- Hypothesis Driven Hunting
+- IOC Analysis
+- Event Correlation
+- MITRE ATT&CK Mapping
+
+---
+
+## Detection Engineering
+
+- Wazuh Rules
+- Sigma Rules
+- Detection Validation
+- Detection Tuning
+
+---
+
+## Incident Response
+
+- Initial Investigation
+- Evidence Collection
+- IOC Identification
+- Technical Documentation
+
+---
+
+# Tecnologías y Herramientas
+
+## SIEM
+
+- Wazuh
 
 ## Sistemas Operativos
 
-- Windows
+- Windows 11
 - Ubuntu Server
 - Kali Linux
 
-## Herramientas de Seguridad
+## Seguridad
 
-- Wazuh
 - Sysmon
 - Suricata
 - Sigma
 - YARA
-- VirusTotal
+- MITRE ATT&CK
 
 ## Infraestructura
 
 - VirtualBox
 - Git
 - GitHub
-- Microsoft 365
 - Active Directory
+- Microsoft Entra ID
+- Microsoft 365
+- FortiGate
 
 ---
 
-# Filosofía Profesional
+# Formación
 
-Considero que la ciberseguridad requiere una combinación de conocimiento técnico, pensamiento analítico y aprendizaje continuo.
+Mi formación profesional combina experiencia en Tecnologías de la Información con especialización continua en ciberseguridad.
 
-Este portafolio refleja mi compromiso con el desarrollo profesional mediante la construcción de laboratorios propios, la documentación técnica de cada implementación y el análisis de escenarios basados en situaciones reales.
+Incluye formación académica, diplomados, rutas de aprendizaje y certificaciones orientadas a **Blue Team**, **SOC Operations**, **Threat Hunting**, **Detection Engineering** e **Incident Response**.
 
-Mi objetivo no es únicamente aprender nuevas herramientas, sino comprender cómo funcionan los procesos de monitoreo, detección e investigación para contribuir de forma efectiva a un equipo de Blue Team.
-
----
-
-# Aprendizaje Continuo
-
-Actualmente continúo fortaleciendo conocimientos en:
-
-- Threat Hunting
-- Detection Engineering
-- Incident Response
-- Digital Forensics
-- Purple Team
-- SIEM Engineering
-- Automatización mediante PowerShell
-- MITRE ATT&CK
+La información detallada puede consultarse en la carpeta **Credentials** de este portafolio.
 
 ---
 
-# Este Portafolio
+# Actualmente
 
-Este repositorio documenta mi evolución profesional en ciberseguridad mediante:
+Actualmente me encuentro desarrollando:
 
-- Laboratorios prácticos
-- Casos de investigación
-- Reglas de detección
-- Procedimientos de Incident Response
-- Ejercicios de Threat Hunting
-- Documentación técnica
-- Lecciones aprendidas
+- Laboratorio profesional basado en Wazuh SIEM.
+- Casos prácticos de Threat Hunting.
+- Investigaciones de Incident Response.
+- Desarrollo de reglas de detección.
+- Documentación técnica.
+- Proyectos orientados a Blue Team.
 
-Cada laboratorio sigue una metodología uniforme basada en planificación, implementación, validación y documentación técnica.
+---
+
+# Objetivo Profesional
+
+Continuar desarrollándome como **SOC Analyst**, **SIEM Analyst** o integrante de un equipo **Blue Team**, contribuyendo al monitoreo, detección, investigación y respuesta ante incidentes mediante el uso de metodologías, herramientas y buenas prácticas empleadas en la industria.
 
 ---
 
@@ -126,8 +143,18 @@ Cada laboratorio sigue una metodología uniforme basada en planificación, imple
 
 ## GitHub
 
+**Perfil**
+
 https://github.com/fernando-jimenezh
+
+---
 
 ## LinkedIn
 
+**Lenin Fernando Jiménez Herrera**
+
 https://www.linkedin.com/in/lenin-fernando-jim%C3%A9nez-7750aa2b0
+
+---
+
+> *"El aprendizaje continuo, la práctica constante y la documentación técnica son pilares fundamentales para fortalecer las capacidades de defensa en ciberseguridad."*
