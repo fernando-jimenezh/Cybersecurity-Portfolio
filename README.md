@@ -151,7 +151,7 @@ https://github.com/Fernando-Jiménez
 
 LinkedIn
 
-(Add your LinkedIn URL)
+www.linkedin.com/in/lenin-fernando-jiménez-7750aa2b0
 
 ---
 
