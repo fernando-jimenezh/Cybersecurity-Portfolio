@@ -116,7 +116,6 @@ Mi formación profesional combina experiencia en Tecnologías de la Información
 
 Incluye formación académica, diplomados, rutas de aprendizaje y certificaciones orientadas a **Blue Team**, **SOC Operations**, **Threat Hunting**, **Detection Engineering** e **Incident Response**.
 
-La información detallada puede consultarse en la carpeta **Credentials** de este portafolio.
 
 ---
 
