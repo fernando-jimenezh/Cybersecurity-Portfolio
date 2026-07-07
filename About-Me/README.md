@@ -2,7 +2,9 @@
   <img src="profile.jpg" width="180" alt="Lenin Fernando Jiménez Herrera">
 </p>
 
-<h1 align="center">Lenin Fernando Jiménez Herrera</h1>
+<h1 align="center">
+Lenin Fernando Jiménez Herrera
+</h1>
 
 <p align="center">
 
@@ -14,71 +16,31 @@
 
 # Sobre mí
 
-Soy un profesional de Tecnologías de la Información con más de **15 años de experiencia** en infraestructura tecnológica, soporte, administración de sistemas y redes.
+Soy un profesional de Tecnologías de la Información con más de **15 años de experiencia** en infraestructura tecnológica, soporte, administración de sistemas y administración de plataformas.
 
-Actualmente me especializo en **ciberseguridad defensiva**, desarrollando competencias prácticas en **SOC Operations**, **Threat Hunting**, **Detection Engineering** e **Incident Response**, mediante laboratorios propios orientados a escenarios reales.
+Actualmente me especializo en **ciberseguridad defensiva**, fortaleciendo competencias en **SOC Operations**, **Threat Hunting**, **Detection Engineering** e **Incident Response** mediante un laboratorio profesional desarrollado con tecnologías ampliamente utilizadas en la industria.
 
-Mi enfoque profesional está orientado al monitoreo de seguridad, análisis de eventos, investigación de amenazas, desarrollo de reglas de detección y mejora continua de las capacidades defensivas de una organización.
+Este portafolio refleja mi evolución profesional a través de laboratorios, investigaciones técnicas y proyectos prácticos orientados a operaciones de seguridad.
 
 ---
 
 # Perfil Profesional
 
-Mi objetivo es desarrollar una carrera profesional dentro de equipos **SOC** y **Blue Team**, participando en actividades relacionadas con:
+Me interesa desarrollarme profesionalmente dentro de equipos **SOC** y **Blue Team**, participando en actividades de monitoreo, investigación y respuesta ante incidentes.
 
-- Security Monitoring
+Mi enfoque está orientado a:
+
+- SOC Operations
 - SIEM Administration
 - Threat Hunting
 - Detection Engineering
 - Incident Response
-- Security Operations
+- Security Monitoring
 - Log Analysis
-- Event Correlation
-
-Este portafolio documenta mi evolución profesional mediante laboratorios, investigaciones y proyectos desarrollados sobre un entorno propio basado en **Wazuh SIEM**.
 
 ---
 
-# Competencias Técnicas
-
-## SOC Operations
-
-- Alert Monitoring
-- Alert Triage
-- Event Analysis
-- Incident Classification
-- Log Correlation
-
----
-
-## Threat Hunting
-
-- Hypothesis Driven Hunting
-- IOC Analysis
-- Event Correlation
-- MITRE ATT&CK Mapping
-
----
-
-## Detection Engineering
-
-- Wazuh Rules
-- Sigma Rules
-- Detection Validation
-- Detection Tuning
-
----
-
-## Incident Response
-
-- Initial Investigation
-- Evidence Collection
-- IOC Identification
-- Technical Documentation
-
----
-
-# Tecnologías y Herramientas
+# Tecnologías
 
 ## SIEM
 
@@ -103,19 +65,41 @@ Este portafolio documenta mi evolución profesional mediante laboratorios, inves
 - VirtualBox
 - Git
 - GitHub
-- Active Directory
-- Microsoft Entra ID
 - Microsoft 365
+- Microsoft Entra ID
+- Active Directory
 - FortiGate
 
 ---
 
 # Formación
 
-Mi formación profesional combina experiencia en Tecnologías de la Información con especialización continua en ciberseguridad.
+Mi formación combina experiencia profesional, educación formal y aprendizaje continuo.
 
-Incluye formación académica, diplomados, rutas de aprendizaje y certificaciones orientadas a **Blue Team**, **SOC Operations**, **Threat Hunting**, **Detection Engineering** e **Incident Response**.
+## Formación Académica
 
+- Tecnólogo Superior en Análisis de Sistemas.
+- Diplomado en Ciberseguridad.
+
+## Certificaciones
+
+### Microsoft
+
+- Security Engineer Career Path.
+
+### Fortinet
+
+- Fortinet Certified Fundamentals in Cybersecurity.
+- Fortinet Certified Associate in Cybersecurity.
+
+### Cisco Networking Academy
+
+- Junior Cybersecurity Analyst Career Path.
+- Networking Devices and Initial Configuration.
+- Network Addressing and Basic Troubleshooting.
+- Networking Basics.
+- Introduction to Cybersecurity.
+- Introduction to IoT.
 
 ---
 
@@ -124,8 +108,8 @@ Incluye formación académica, diplomados, rutas de aprendizaje y certificacione
 Actualmente me encuentro desarrollando:
 
 - Laboratorio profesional basado en Wazuh SIEM.
-- Casos prácticos de Threat Hunting.
-- Investigaciones de Incident Response.
+- Investigaciones de Threat Hunting.
+- Casos prácticos de Incident Response.
 - Desarrollo de reglas de detección.
 - Documentación técnica.
 - Proyectos orientados a Blue Team.
@@ -134,7 +118,7 @@ Actualmente me encuentro desarrollando:
 
 # Objetivo Profesional
 
-Continuar desarrollándome como **SOC Analyst**, **SIEM Analyst** o integrante de un equipo **Blue Team**, contribuyendo al monitoreo, detección, investigación y respuesta ante incidentes mediante el uso de metodologías, herramientas y buenas prácticas empleadas en la industria.
+Continuar desarrollándome como **SOC Analyst**, **SIEM Analyst** o integrante de un equipo **Blue Team**, contribuyendo al monitoreo, detección, investigación y respuesta ante incidentes mediante metodologías, herramientas y buenas prácticas empleadas en la industria.
 
 ---
 
@@ -142,7 +126,7 @@ Continuar desarrollándome como **SOC Analyst**, **SIEM Analyst** o integrante d
 
 ## GitHub
 
-**Perfil**
+**Fernando-Jiménez**
 
 https://github.com/fernando-jimenezh
 
@@ -156,4 +140,4 @@ https://www.linkedin.com/in/lenin-fernando-jim%C3%A9nez-7750aa2b0
 
 ---
 
-> *"El aprendizaje continuo, la práctica constante y la documentación técnica son pilares fundamentales para fortalecer las capacidades de defensa en ciberseguridad."*
+> *"El aprendizaje continuo, la práctica constante y la documentación técnica son pilares fundamentales para fortalecer las capacidades defensivas en ciberseguridad."*
