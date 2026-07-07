@@ -1,16 +1,3 @@
-────────────────────────────────────────────────────────────
-
-        LENIN FERNANDO JIMÉNEZ HERRERA
-
-            CYBERSECURITY PORTFOLIO
-
- Blue Team • SOC Operations • Threat Hunting
- Detection Engineering • Incident Response
-
-            Wazuh • Windows • Linux
-
-──────────────────────────────────────────────
-
 # Cybersecurity Portfolio
 
 > Portafolio profesional orientado a **Blue Team**, **SOC Operations**, **Threat Hunting**, **Detection Engineering** e **Incident Response**.
