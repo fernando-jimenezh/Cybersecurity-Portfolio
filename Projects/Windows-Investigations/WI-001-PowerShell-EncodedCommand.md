@@ -1,37 +1,26 @@
 # WI-001 - PowerShell EncodedCommand
 
----
+## Resumen
 
-# Resumen
+Se investigó la ejecución de **PowerShell** utilizando el parámetro **-EncodedCommand** con el objetivo de validar la telemetría generada por Sysmon y su posterior recolección en Wazuh SIEM.
 
-Se realizó una investigación sobre la ejecución de PowerShell utilizando el parámetro **-EncodedCommand**, con el objetivo de analizar la telemetría generada en el sistema operativo Windows, validar su recolección mediante Sysmon y confirmar la visualización de los eventos en Wazuh SIEM.
-
-Esta investigación busca comprender qué información queda registrada durante la ejecución de comandos codificados y evaluar los elementos disponibles para un analista SOC durante el proceso de investigación.
+Durante la investigación se analizaron los eventos generados por la creación del proceso y las alertas asociadas, evaluando la información disponible para un analista SOC.
 
 ---
 
 # Objetivo
 
-- Analizar la ejecución de PowerShell mediante **-EncodedCommand**.
-- Validar la generación de eventos en Windows.
-- Confirmar la recepción de la telemetría en Wazuh SIEM.
-- Identificar información relevante para una investigación.
-- Evaluar oportunidades de detección.
-
----
-
-# Alcance
-
-La investigación contempla el análisis de la ejecución del proceso PowerShell dentro de un laboratorio controlado.
-
-No se evaluó la ejecución de código malicioso, únicamente la generación y análisis de la telemetría producida por el uso del parámetro **-EncodedCommand**.
+- Validar la generación de telemetría mediante Sysmon.
+- Confirmar la recepción de eventos en Wazuh SIEM.
+- Analizar la información disponible para una investigación.
+- Identificar indicadores relevantes para detección.
 
 ---
 
 # Entorno
 
-| Componente | Descripción |
-|------------|-------------|
+| Componente | Valor |
+|------------|-------|
 | Sistema Operativo | Windows 11 |
 | SIEM | Wazuh |
 | Telemetría | Sysmon |
@@ -39,99 +28,82 @@ No se evaluó la ejecución de código malicioso, únicamente la generación y a
 
 ---
 
-# Escenario
+# Evidencia
 
-Se ejecutó PowerShell utilizando el parámetro **-EncodedCommand** con el propósito de generar eventos de telemetría para su posterior análisis.
+## Comando ejecutado
 
-La actividad fue realizada de forma controlada dentro del laboratorio de ciberseguridad.
+```powershell
+powershell.exe -EncodedCommand QQA=
+```
 
----
+## Evento identificado
 
-# Procedimiento
-
-Durante la prueba se ejecutó PowerShell utilizando un comando codificado en Base64.
-
-Posteriormente se verificó la generación de eventos mediante Sysmon y la recepción de la información en Wazuh SIEM para su análisis.
-
----
-
-# Evidencias
-
-## Capturas
-
-Pendiente.
-
----
-
-## Eventos registrados
-
-Pendiente.
-
----
-
-## Alertas
-
-Pendiente.
-
----
-
-# Análisis
-
-Durante la investigación se analizarán los siguientes elementos:
-
-- Hora de ejecución.
-- Usuario.
-- Host.
-- Image.
-- ParentImage.
-- CommandLine.
-- ProcessId.
-- Event ID.
-- Rule ID.
-- Nivel de severidad.
-- Grupo de reglas.
-- MITRE ATT&CK.
+| Campo | Valor |
+|--------|-------|
+| Event ID | 1 |
+| Evento | Process Create |
+| Image | `C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe` |
+| Parent Image | `C:\Windows\System32\cmd.exe` |
+| Usuario | `DESKTOP-7CLFI8R\lab` |
+| Process ID | 8584 |
+| Parent Process ID | 11128 |
+| Integrity Level | High |
 
 ---
 
 # Hallazgos
 
-Pendiente de completar durante el análisis de la evidencia.
+Durante la investigación se confirmó que:
+
+- Sysmon registró correctamente la creación del proceso.
+- El parámetro **-EncodedCommand** quedó registrado en el campo **CommandLine**.
+- PowerShell fue iniciado desde **cmd.exe**.
+- La ejecución fue asociada al usuario **DESKTOP-7CLFI8R\lab**.
+- La telemetría fue recibida correctamente por Wazuh.
 
 ---
 
-# Detección
+# Análisis
 
-Se evaluarán posibles mecanismos de detección considerando:
+El uso del parámetro **-EncodedCommand** constituye un comportamiento que requiere revisión, ya que es utilizado tanto por administradores para automatización como por atacantes para ocultar comandos mediante codificación Base64.
 
-- CommandLine.
-- Parent Process.
-- Parámetros utilizados.
-- Comportamiento observado.
-- Correlación de eventos.
+La evidencia disponible no permite clasificar la actividad como maliciosa sin considerar información adicional sobre el contexto de ejecución.
+
+---
+
+# Evaluación del Analista
+
+## ¿La actividad es normal?
+
+No es posible determinarlo únicamente con la evidencia disponible.
+
+## Indicadores relevantes
+
+- Uso de **-EncodedCommand**.
+- Ejecución de **PowerShell** desde **cmd.exe**.
+- Proceso ejecutado con **High Integrity**.
+- Telemetría registrada por Sysmon.
+
+## Decisión
+
+La actividad merece revisión antes de ser descartada.
+
+Como analista SOC N1, recopilaría evidencia adicional y, si el análisis excede mis responsabilidades, escalaría el caso conforme a los procedimientos establecidos por la organización.
 
 ---
 
 # MITRE ATT&CK
 
-| Táctica | Técnica | Descripción |
-|----------|----------|-------------|
-| Pendiente | Pendiente | Pendiente |
+| Táctica | Técnica |
+|----------|----------|
+| Execution | T1059.001 - PowerShell |
+
+> **Nota:** Durante la investigación se observó una alerta asociada a la técnica **T1105**. Sin embargo, la evidencia analizada corresponde a la ejecución de PowerShell mediante **-EncodedCommand**, por lo que se considera más representativa la técnica **T1059.001 (PowerShell)**. La clasificación definitiva dependerá del contexto completo de la actividad.
 
 ---
 
 # Conclusiones
 
-Pendiente de completar al finalizar la investigación.
+La investigación confirmó que Sysmon y Wazuh registran información suficiente para reconstruir la ejecución de PowerShell mediante **-EncodedCommand**, incluyendo el proceso ejecutado, la línea de comandos, el proceso padre, el usuario y el nivel de integridad.
 
----
-
-# Lecciones Aprendidas
-
-Pendiente de completar una vez concluido el análisis.
-
----
-
-# Estado
-
-🟡 En desarrollo.
+Estos elementos proporcionan el contexto necesario para que un analista SOC inicie una investigación y determine si la actividad corresponde a un comportamiento administrativo legítimo o a una posible actividad maliciosa.
