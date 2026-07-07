@@ -6,17 +6,27 @@
 
 # Descripción
 
-Bienvenido a mi portafolio de ciberseguridad.
+Este repositorio documenta el desarrollo de un laboratorio profesional orientado a ciberseguridad defensiva.
 
-Este repositorio documenta el desarrollo de un laboratorio profesional enfocado en ciberseguridad defensiva, donde se implementan escenarios reales para fortalecer habilidades en monitoreo, detección, investigación y respuesta ante incidentes.
+Su objetivo es demostrar competencias prácticas en monitoreo, detección, investigación y respuesta ante incidentes mediante escenarios implementados sobre un laboratorio propio.
 
-Todo el contenido está basado en prácticas realizadas sobre un laboratorio propio utilizando herramientas ampliamente utilizadas en la industria.
+Cada laboratorio y proyecto refleja actividades desarrolladas utilizando metodologías, herramientas y técnicas empleadas habitualmente en equipos **SOC** y **Blue Team**.
+
+---
+
+# Perfil Profesional
+
+Profesional con experiencia en Tecnologías de la Información y especialización en ciberseguridad defensiva.
+
+Este portafolio refleja el desarrollo continuo de competencias en **SOC Operations**, **Threat Hunting**, **Detection Engineering** e **Incident Response**, mediante un laboratorio propio basado en **Wazuh SIEM**.
+
+El objetivo es documentar investigaciones técnicas, desarrollar reglas de detección y fortalecer continuamente las capacidades de análisis, investigación y respuesta ante incidentes.
 
 ---
 
 # Objetivos
 
-Este portafolio tiene como propósito demostrar conocimientos prácticos en:
+Este portafolio tiene como propósito demostrar competencias prácticas en:
 
 - SOC Operations
 - Threat Hunting
@@ -25,11 +35,11 @@ Este portafolio tiene como propósito demostrar conocimientos prácticos en:
 - SIEM Administration
 - Blue Team Operations
 
-Cada laboratorio documenta el proceso completo desde la implementación hasta el análisis de resultados, incluyendo evidencias técnicas y lecciones aprendidas.
+Cada laboratorio documenta el proceso desde la implementación hasta la validación de resultados, mientras que cada proyecto representa investigaciones reales desarrolladas dentro del laboratorio.
 
 ---
 
-# Tecnologías Utilizadas
+# Tecnologías y Herramientas
 
 ## SIEM
 
@@ -59,7 +69,23 @@ Cada laboratorio documenta el proceso completo desde la implementación hasta el
 
 # Arquitectura del Laboratorio
 
-El laboratorio está diseñado para simular un entorno corporativo donde es posible generar telemetría, detectar amenazas, realizar investigaciones y validar reglas de detección.
+El laboratorio está diseñado para simular un entorno corporativo donde es posible generar telemetría, detectar amenazas, desarrollar investigaciones y validar reglas de detección.
+
+```
+                  Kali Linux
+                       │
+                       ▼
+                 Windows 11
+                       │
+                       ▼
+                 Ubuntu Server
+                       │
+                       ▼
+                  Wazuh SIEM
+                       │
+                       ▼
+                  SOC Analyst
+```
 
 Infraestructura principal:
 
@@ -68,7 +94,7 @@ Infraestructura principal:
 - Ubuntu Server
 - Kali Linux
 
-Durante el desarrollo del proyecto se incorporarán nuevos componentes conforme avance el laboratorio.
+La infraestructura evolucionará continuamente mediante la incorporación de nuevos componentes y escenarios de seguridad.
 
 ---
 
@@ -113,7 +139,7 @@ Construcción del laboratorio.
 
 ## Security Monitoring
 
-Implementación del monitoreo de eventos.
+Implementación del monitoreo y análisis de eventos de seguridad.
 
 - Windows Telemetry
 - Linux Telemetry
@@ -123,33 +149,33 @@ Implementación del monitoreo de eventos.
 
 ## Threat Hunting
 
-Desarrollo de investigaciones utilizando telemetría y TTPs asociadas al framework MITRE ATT&CK.
+Desarrollo de investigaciones proactivas utilizando telemetría, hipótesis de investigación y técnicas asociadas al framework **MITRE ATT&CK**.
 
 ---
 
 ## Detection Engineering
 
-Diseño y validación de reglas de detección utilizando Wazuh y Sigma.
+Diseño, desarrollo y validación de reglas de detección utilizando **Wazuh** y **Sigma**.
 
 ---
 
 ## Incident Response
 
-Investigación de incidentes, análisis de evidencias y documentación técnica.
+Investigación de incidentes, análisis de evidencias, clasificación de eventos y documentación técnica.
 
 ---
 
 ## Purple Team
 
-Validación de controles defensivos mediante simulación de técnicas adversarias.
+Validación de controles defensivos mediante la simulación controlada de técnicas adversarias y evaluación de la capacidad de detección.
 
 ---
 
 # Estado del Proyecto
 
-Este portafolio se encuentra en desarrollo continuo.
+Este portafolio evoluciona continuamente mediante la incorporación de nuevos laboratorios, investigaciones, reglas de detección y ejercicios de **Threat Hunting** desarrollados dentro del entorno de laboratorio.
 
-Cada laboratorio será documentado siguiendo una metodología uniforme basada en:
+Toda la documentación sigue una metodología uniforme basada en:
 
 - Objetivo
 - Alcance
@@ -162,20 +188,22 @@ Cada laboratorio será documentado siguiendo una metodología uniforme basada en
 - Evidencias
 - Detecciones implementadas
 - Mapeo MITRE ATT&CK
-- Lecciones aprendidas
+- Lecciones Aprendidas
 - Referencias
 
 ---
 
 # Contacto
 
+
 ## GitHub
 
-https://github.com/fernando-jimenezh
+[Fernando-Jiménez](https://github.com/fernando-jimenezh)
 
 ## LinkedIn
 
-https://www.linkedin.com/in/lenin-fernando-jim%C3%A9nez-7750aa2b0
+[Lenin Fernando Jiménez Herrera](https://www.linkedin.com/in/lenin-fernando-jim%C3%A9nez-7750aa2b0)
+
 
 ---
 
