@@ -1,46 +1,55 @@
 # Cybersecurity Portfolio
 
-> Blue Team | SOC Operations | Threat Hunting | Detection Engineering | Incident Response
-
-Welcome to my Cybersecurity Portfolio.
-
-This repository documents my hands-on learning journey and practical experience in defensive cybersecurity through the design, implementation, and operation of a professional Blue Team laboratory.
-
-The portfolio demonstrates practical skills in security monitoring, threat detection, incident investigation, and SIEM administration using real-world scenarios.
+> Portafolio profesional orientado a **Blue Team**, **SOC Operations**, **Threat Hunting**, **Detection Engineering** e **Incident Response**.
 
 ---
 
-# Professional Objectives
+# Descripción
 
-- SOC Analyst (Tier 1 / Tier 2)
-- Threat Hunter
-- Detection Engineer
-- Incident Responder
-- SIEM Administrator
+Bienvenido a mi portafolio de ciberseguridad.
+
+Este repositorio documenta el desarrollo de un laboratorio profesional enfocado en ciberseguridad defensiva, donde se implementan escenarios reales para fortalecer habilidades en monitoreo, detección, investigación y respuesta ante incidentes.
+
+Todo el contenido está basado en prácticas realizadas sobre un laboratorio propio utilizando herramientas ampliamente utilizadas en la industria.
 
 ---
 
-# Core Technologies
+# Objetivos
+
+Este portafolio tiene como propósito demostrar conocimientos prácticos en:
+
+- SOC Operations
+- Threat Hunting
+- Detection Engineering
+- Incident Response
+- SIEM Administration
+- Blue Team Operations
+
+Cada laboratorio documenta el proceso completo desde la implementación hasta el análisis de resultados, incluyendo evidencias técnicas y lecciones aprendidas.
+
+---
+
+# Tecnologías Utilizadas
 
 ## SIEM
 
 - Wazuh
 
-## Operating Systems
+## Sistemas Operativos
 
 - Windows 11
 - Ubuntu Server
 - Kali Linux
 
-## Security Tools
+## Seguridad
 
 - Sysmon
 - Suricata
-- VirusTotal
-- Sigma Rules
+- Sigma
 - YARA
+- MITRE ATT&CK
 
-## Infrastructure
+## Infraestructura
 
 - VirtualBox
 - Git
@@ -48,13 +57,30 @@ The portfolio demonstrates practical skills in security monitoring, threat detec
 
 ---
 
-# Repository Structure
+# Arquitectura del Laboratorio
+
+El laboratorio está diseñado para simular un entorno corporativo donde es posible generar telemetría, detectar amenazas, realizar investigaciones y validar reglas de detección.
+
+Infraestructura principal:
+
+- Wazuh Server
+- Windows 11
+- Ubuntu Server
+- Kali Linux
+
+Durante el desarrollo del proyecto se incorporarán nuevos componentes conforme avance el laboratorio.
+
+---
+
+# Estructura del Repositorio
 
 ```
 Cybersecurity-Portfolio
 │
 ├── About-Me
+│
 ├── Knowledge-Base
+│
 ├── Labs
 │   ├── Foundation
 │   ├── Security-Monitoring
@@ -73,11 +99,11 @@ Cybersecurity-Portfolio
 
 ---
 
-# Laboratory Roadmap
+# Roadmap
 
 ## Foundation
 
-Building the cybersecurity laboratory.
+Construcción del laboratorio.
 
 - Environment Setup
 - Wazuh Deployment
@@ -87,7 +113,7 @@ Building the cybersecurity laboratory.
 
 ## Security Monitoring
 
-Collection and analysis of security events.
+Implementación del monitoreo de eventos.
 
 - Windows Telemetry
 - Linux Telemetry
@@ -97,62 +123,60 @@ Collection and analysis of security events.
 
 ## Threat Hunting
 
-Threat hunting methodologies.
-
-- IOC Hunting
-- Behavioral Analysis
-- MITRE ATT&CK Mapping
+Desarrollo de investigaciones utilizando telemetría y TTPs asociadas al framework MITRE ATT&CK.
 
 ---
 
 ## Detection Engineering
 
-Development of detection logic.
-
-- Sigma Rules
-- Wazuh Rules
-- Detection Validation
+Diseño y validación de reglas de detección utilizando Wazuh y Sigma.
 
 ---
 
 ## Incident Response
 
-Investigation and containment.
-
-- Host Investigation
-- Timeline Analysis
-- Root Cause Analysis
+Investigación de incidentes, análisis de evidencias y documentación técnica.
 
 ---
 
 ## Purple Team
 
-Detection validation and adversary emulation.
-
-- Atomic Red Team
-- ATT&CK Mapping
-- Detection Improvement
+Validación de controles defensivos mediante simulación de técnicas adversarias.
 
 ---
 
-# Current Status
+# Estado del Proyecto
 
-This portfolio is under continuous development.
+Este portafolio se encuentra en desarrollo continuo.
 
-New laboratories, detection rules, incident investigations, and threat hunting exercises are regularly added.
+Cada laboratorio será documentado siguiendo una metodología uniforme basada en:
+
+- Objetivo
+- Alcance
+- Arquitectura
+- Tecnologías utilizadas
+- Requisitos
+- Implementación
+- Configuración
+- Validación
+- Evidencias
+- Detecciones implementadas
+- Mapeo MITRE ATT&CK
+- Lecciones aprendidas
+- Referencias
 
 ---
 
-# Contact
+# Contacto
 
-GitHub
+## GitHub
 
-https://github.com/Fernando-Jiménez
+https://github.com/fernando-jimenezh
 
-LinkedIn
+## LinkedIn
 
-www.linkedin.com/in/lenin-fernando-jiménez-7750aa2b0
+https://www.linkedin.com/in/lenin-fernando-jim%C3%A9nez-7750aa2b0
 
 ---
 
-© 2026 Fernando Jiménez
+© 2026 LFJH
