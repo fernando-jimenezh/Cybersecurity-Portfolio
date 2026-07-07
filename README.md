@@ -16,7 +16,7 @@ Cada laboratorio y proyecto refleja actividades desarrolladas utilizando metodol
 
 # Perfil Profesional
 
-Profesional con experiencia en Tecnologías de la Información y especialización en ciberseguridad defensiva.
+Profesional con experiencia en Tecnologías de la Información y especializado en ciberseguridad defensiva.
 
 Este portafolio refleja el desarrollo continuo de competencias en **SOC Operations**, **Threat Hunting**, **Detection Engineering** e **Incident Response**, mediante un laboratorio propio basado en **Wazuh SIEM**.
 
@@ -71,7 +71,7 @@ Cada laboratorio documenta el proceso desde la implementación hasta la validaci
 
 El laboratorio está diseñado para simular un entorno corporativo donde es posible generar telemetría, detectar amenazas, desarrollar investigaciones y validar reglas de detección.
 
-```
+```text
                   Kali Linux
                        │
                        ▼
@@ -100,7 +100,7 @@ La infraestructura evolucionará continuamente mediante la incorporación de nue
 
 # Estructura del Repositorio
 
-```
+```text
 Cybersecurity-Portfolio
 │
 ├── About-Me
@@ -195,15 +195,25 @@ Toda la documentación sigue una metodología uniforme basada en:
 
 # Contacto
 
-
 ## GitHub
 
-[Fernando-Jiménez](https://github.com/fernando-jimenezh)
+**Perfil**
+
+👉 **Fernando-Jiménez**
+
+https://github.com/fernando-jimenezh
+
+**Repositorio**
+
+https://github.com/fernando-jimenezh/Cybersecurity-Portfolio
+
+---
 
 ## LinkedIn
 
-[Lenin Fernando Jiménez Herrera](https://www.linkedin.com/in/lenin-fernando-jim%C3%A9nez-7750aa2b0)
+**Lenin Fernando Jiménez Herrera**
 
+https://www.linkedin.com/in/lenin-fernando-jim%C3%A9nez-7750aa2b0
 
 ---
 
