@@ -6,15 +6,28 @@ Durante las actividades de monitoreo del laboratorio se identificó la ejecució
 
 La investigación permitió validar la telemetría generada por Sysmon, confirmar la recepción del evento por Wazuh y verificar que la actividad fue detectada correctamente mediante la regla nativa **92057**, sin requerir reglas personalizadas adicionales.
 
+El caso permitió reconstruir el flujo completo del evento, desde la creación del proceso hasta la generación de la alerta, proporcionando una visión integral del proceso de investigación dentro de un entorno Blue Team.
+
 ---
 
-# Objetivo
+# Objective
 
 Investigar la ejecución de PowerShell utilizando **-EncodedCommand**, validar el proceso completo de detección dentro de Wazuh y documentar el análisis técnico realizado durante la investigación.
 
 ---
 
-# Escenario
+# Environment
+
+| Component | Value |
+|-----------|-------|
+| Operating System | Windows 11 |
+| SIEM | Wazuh 4.14.5 |
+| Telemetry | Sysmon |
+| Hypervisor | VirtualBox |
+
+---
+
+# Scenario
 
 Como parte del laboratorio se ejecutó una prueba controlada utilizando PowerShell para generar telemetría relacionada con comandos codificados.
 
@@ -28,7 +41,7 @@ Aunque el contenido Base64 utilizado es inválido y genera un error durante la e
 
 ---
 
-# Alcance
+# Scope
 
 La investigación incluyó:
 
@@ -38,7 +51,8 @@ La investigación incluyó:
 - Validación del procesamiento del evento.
 - Revisión del motor de reglas.
 - Confirmación de la detección nativa.
-- Documentación de los resultados.
+- Correlación de evidencia.
+- Documentación del caso.
 
 ---
 
@@ -48,58 +62,65 @@ La investigación comenzó tras identificar la ejecución de PowerShell mediante
 
 El evento fue registrado por Sysmon como **Event ID 1 (Process Create)**, proporcionando información detallada sobre el proceso ejecutado, la línea de comandos utilizada, el proceso padre y el usuario responsable de la ejecución.
 
-Posteriormente se verificó que el evento fue recibido correctamente por Wazuh, donde fue procesado por el motor de reglas hasta generar una alerta correspondiente a la técnica detectada.
+Posteriormente se verificó que el evento fue recibido correctamente por Wazuh, donde fue procesado por el motor de reglas hasta generar la alerta correspondiente.
+
+Finalmente se revisó el ruleset oficial para comprender el flujo interno de procesamiento utilizado por Wazuh antes de generar la detección.
 
 ---
 
 # Timeline
 
-| Hora | Evento |
-|------|--------|
-| 18:09:48 | Ejecución de PowerShell con **-EncodedCommand** |
-| 18:09:48 | Sysmon registra Event ID 1 |
-| 18:09:56 | Wazuh recibe el evento |
-| 18:09:56 | Se activa la regla nativa 92057 |
-| Posteriormente | Se inicia la investigación técnica |
-| Final | Caso documentado |
+| Time | Event |
+|------|-------|
+| 18:09:48 | PowerShell executed with **-EncodedCommand** |
+| 18:09:48 | Sysmon registered Event ID 1 |
+| 18:09:56 | Wazuh received the event |
+| 18:09:56 | Native Rule 92057 triggered |
+| Afterwards | Technical investigation initiated |
+| Final | Case documented |
 
 ---
 
 # Evidence
 
-## Evento observado
+## Process Execution
 
-| Campo | Valor |
+| Field | Value |
 |--------|-------|
 | Provider | Microsoft-Windows-Sysmon |
 | Event ID | 1 |
-| Process | powershell.exe |
-| Parent Process | cmd.exe |
-| CommandLine | powershell.exe -EncodedCommand QQA= |
-| User | lab |
+| Image | powershell.exe |
+| Parent Image | cmd.exe |
+| Command Line | powershell.exe -EncodedCommand QQA= |
+| User | DESKTOP-7CLFI8R\lab |
 | Source | Sysmon |
 
 ---
 
-## Detección
+## Detection
 
-| Campo | Valor |
+| Field | Value |
 |--------|-------|
 | Rule ID | 92057 |
-| Detección | PowerShell Encoded Command |
-| Resultado | Detectado correctamente |
+| Description | PowerShell Encoded Command |
+| Result | Successfully Detected |
 
 ---
 
 # Technical Analysis
 
-La ejecución de PowerShell utilizando **-EncodedCommand** constituye una técnica utilizada para ocultar comandos durante su ejecución.
+La utilización de **-EncodedCommand** constituye una técnica utilizada para ocultar comandos mediante codificación Base64.
 
-Aunque este comportamiento puede formar parte de actividades administrativas legítimas, también es ampliamente empleado por actores maliciosos para dificultar el análisis y evadir mecanismos básicos de detección.
+Aunque este comportamiento puede formar parte de tareas administrativas legítimas, también es ampliamente empleado por atacantes para dificultar el análisis y evadir mecanismos básicos de detección.
 
-Durante la investigación se observó que el proceso fue iniciado desde **cmd.exe**, ejecutándose bajo el usuario del laboratorio.
+Durante la investigación se confirmó que:
 
-La evidencia disponible no permitió asociar actividad adicional que indicara compromiso del sistema, sin embargo, el comportamiento requiere validación debido a su naturaleza.
+- PowerShell fue iniciado desde **cmd.exe**.
+- El proceso fue ejecutado con privilegios elevados (**High Integrity**).
+- Sysmon registró toda la información necesaria para reconstruir la ejecución.
+- Wazuh correlacionó correctamente el evento y generó la alerta correspondiente.
+
+No se identificó evidencia adicional que indicara compromiso del sistema.
 
 ---
 
@@ -107,7 +128,7 @@ La evidencia disponible no permitió asociar actividad adicional que indicara co
 
 Como parte del análisis se revisó el funcionamiento interno del motor de reglas de Wazuh.
 
-Se verificó la cadena de procesamiento utilizada para eventos Sysmon Event ID 1:
+Se confirmó la siguiente cadena de procesamiento:
 
 ```
 Windows
@@ -128,29 +149,27 @@ Group sysmon_event1
 Rule 92057
 ```
 
-La investigación confirmó que Wazuh incorpora una regla nativa capaz de detectar este comportamiento.
-
-No fue necesario desarrollar una regla personalizada.
-
----
-
-# MITRE ATT&CK
-
-| Táctica | Técnica |
-|----------|----------|
-| Execution | T1059.001 – PowerShell |
+La investigación confirmó que Wazuh incorpora una regla nativa capaz de detectar este comportamiento sin requerir reglas personalizadas.
 
 ---
 
 # Risk Assessment
 
-| Factor | Evaluación |
+| Factor | Assessment |
 |---------|------------|
-| Probabilidad | Media |
-| Impacto | Medio |
-| Prioridad | Media |
+| Probability | Medium |
+| Impact | Medium |
+| Priority | Medium |
 
-La utilización de **-EncodedCommand** requiere análisis contextual, ya que puede corresponder tanto a actividades administrativas como a técnicas empleadas por atacantes.
+La utilización de **-EncodedCommand** requiere análisis contextual, ya que puede corresponder tanto a actividades administrativas como a técnicas empleadas por actores maliciosos.
+
+---
+
+# MITRE ATT&CK
+
+| Tactic | Technique |
+|----------|-----------|
+| Execution | T1059.001 – PowerShell |
 
 ---
 
@@ -160,28 +179,19 @@ La utilización de **-EncodedCommand** requiere análisis contextual, ya que pue
 - Identificar el usuario responsable.
 - Revisar procesos padre e hijos.
 - Correlacionar con eventos Sysmon adicionales.
-- Verificar conexiones de red asociadas.
+- Revisar conexiones de red asociadas.
 - Buscar ejecuciones similares dentro del entorno.
-- Revisar actividad posterior del proceso.
+- Analizar actividad posterior del proceso.
 
 ---
 
 # Lessons Learned
 
 - Una única acción puede generar múltiples fuentes de telemetría.
-- Sysmon proporciona información detallada para investigaciones de procesos.
-- Antes de desarrollar reglas personalizadas es recomendable validar las capacidades nativas del SIEM.
-- Comprender el flujo interno del motor de reglas facilita el proceso de Detection Engineering.
-- La correlación entre evidencia, reglas y telemetría mejora significativamente la calidad del análisis.
-
----
-
-# Referencias
-
-- WI-001 – PowerShell EncodedCommand Investigation
-- DR-001 – Validate Wazuh Rule 92057
-- Microsoft Sysmon
-- MITRE ATT&CK – T1059.001
+- Sysmon proporciona información suficiente para reconstruir la ejecución de procesos.
+- Antes de desarrollar reglas personalizadas es recomendable validar el contenido nativo del SIEM.
+- Comprender el flujo interno del motor de reglas facilita el trabajo de Detection Engineering.
+- La correlación entre evidencia, reglas y telemetría mejora significativamente la calidad de una investigación.
 
 ---
 
@@ -193,4 +203,20 @@ La evidencia generada en el laboratorio confirmó el correcto funcionamiento de 
 
 Asimismo, el análisis permitió verificar que la regla nativa **92057** proporciona cobertura para esta técnica, demostrando la importancia de revisar y validar el contenido existente antes de desarrollar reglas personalizadas.
 
-Este caso de estudio permitió fortalecer conocimientos relacionados con monitoreo de seguridad, investigación de eventos, análisis de telemetría, Detection Engineering y validación de capacidades de detección dentro de un entorno Blue Team.
+Este caso de estudio fortaleció conocimientos relacionados con monitoreo de seguridad, investigación de eventos, análisis de telemetría, Detection Engineering y validación de capacidades de detección dentro de un entorno Blue Team.
+
+---
+
+# References
+
+- Microsoft Sysmon
+- Wazuh Documentation
+- MITRE ATT&CK – T1059.001 (PowerShell)
+
+---
+
+# Related Projects
+
+- WI-001 – PowerShell EncodedCommand
+- DR-001 – Validate Wazuh Rule 92057
+- TH-001 – Threat Hunting: PowerShell EncodedCommand
