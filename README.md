@@ -8,19 +8,19 @@
 
 Este repositorio documenta el desarrollo de un laboratorio profesional orientado a ciberseguridad defensiva.
 
-Su objetivo es demostrar competencias prácticas en monitoreo, detección, investigación y respuesta ante incidentes mediante escenarios implementados sobre un laboratorio propio.
+Su objetivo es demostrar competencias prácticas en **Security Monitoring**, **Threat Hunting**, **Detection Engineering** e **Incident Response** mediante escenarios implementados sobre un laboratorio propio.
 
-Cada laboratorio y proyecto refleja actividades desarrolladas utilizando metodologías, herramientas y técnicas empleadas habitualmente en equipos **SOC** y **Blue Team**.
+Cada laboratorio y proyecto refleja actividades desarrolladas utilizando metodologías, herramientas y técnicas empleadas habitualmente por equipos **SOC** y **Blue Team**.
+
+Asimismo, este portafolio documenta investigaciones técnicas, el desarrollo y validación de reglas de detección, así como el fortalecimiento continuo de las capacidades de análisis, investigación y respuesta ante incidentes.
 
 ---
 
-# Perfil Profesional
+# Acerca del autor
 
-Profesional con experiencia en Tecnologías de la Información y especializado en ciberseguridad defensiva.
+Este portafolio ha sido desarrollado y es mantenido por **Lenin Fernando Jiménez Herrera**.
 
-Este portafolio refleja el desarrollo continuo de competencias en **SOC Operations**, **Threat Hunting**, **Detection Engineering** e **Incident Response**, mediante un laboratorio propio basado en **Wazuh SIEM**.
-
-El objetivo es documentar investigaciones técnicas, desarrollar reglas de detección y fortalecer continuamente las capacidades de análisis, investigación y respuesta ante incidentes.
+Para conocer más sobre mi experiencia profesional, formación, certificaciones y objetivos, visita la sección **[About-Me](About-Me/README.md)**.
 
 ---
 
@@ -56,7 +56,6 @@ Cada laboratorio documenta el proceso desde la implementación hasta la validaci
 - Sysmon
 - Suricata
 - Sigma
-- YARA
 - MITRE ATT&CK
 
 ## Infraestructura
@@ -197,23 +196,12 @@ Toda la documentación sigue una metodología uniforme basada en:
 
 ## GitHub
 
-**Perfil**
-
-👉 **Fernando-Jiménez**
-
-https://github.com/fernando-jimenezh
-
-**Repositorio**
-
-https://github.com/fernando-jimenezh/Cybersecurity-Portfolio
-
----
+- **Perfil:** [fernando-jimenezh](https://github.com/fernando-jimenezh)
+- **Cybersecurity Portfolio:** [Cybersecurity-Portfolio](https://github.com/fernando-jimenezh/Cybersecurity-Portfolio)
 
 ## LinkedIn
 
-**Lenin Fernando Jiménez Herrera**
-
-https://www.linkedin.com/in/lenin-fernando-jim%C3%A9nez-7750aa2b0
+- **Lenin Fernando Jiménez Herrera:** [LinkedIn](https://www.linkedin.com/in/lenin-fernando-jim%C3%A9nez-7750aa2b0)
 
 ---
 

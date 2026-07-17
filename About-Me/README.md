@@ -7,137 +7,93 @@ Lenin Fernando Jiménez Herrera
 </h1>
 
 <p align="center">
-
-**SOC Analyst • SIEM Analyst • Blue Team • Threat Hunting • Detection Engineering • Incident Response**
-
+<strong>Blue Team • SOC Operations • Threat Hunting • Detection Engineering • Incident Response</strong>
 </p>
 
 ---
 
 # Sobre mí
 
-Soy un profesional de Tecnologías de la Información con más de **15 años de experiencia** en infraestructura tecnológica, soporte, administración de sistemas y administración de plataformas.
+Soy un profesional de Tecnologías de la Información con experiencia en infraestructura tecnológica, administración de sistemas y soporte, actualmente orientando mi desarrollo profesional hacia la **ciberseguridad defensiva**.
 
-Actualmente me especializo en **ciberseguridad defensiva**, fortaleciendo competencias en **SOC Operations**, **Threat Hunting**, **Detection Engineering** e **Incident Response** mediante un laboratorio profesional desarrollado con tecnologías ampliamente utilizadas en la industria.
+Este portafolio representa mi proceso de aprendizaje continuo mediante un laboratorio propio, donde documento de forma transparente la implementación de tecnologías, investigaciones, reglas de detección y casos prácticos basados en evidencia.
 
-Este portafolio refleja mi evolución profesional a través de laboratorios, investigaciones técnicas y proyectos prácticos orientados a operaciones de seguridad.
+Mi objetivo es fortalecer competencias técnicas en **SOC Operations**, **Threat Hunting**, **Detection Engineering** e **Incident Response**, aplicando metodologías y buenas prácticas utilizadas por equipos **Blue Team**.
 
 ---
 
-# Perfil Profesional
+# Propósito de este Portafolio
 
-Me interesa desarrollarme profesionalmente dentro de equipos **SOC** y **Blue Team**, participando en actividades de monitoreo, investigación y respuesta ante incidentes.
+Este repositorio fue creado para documentar de manera estructurada el desarrollo de un laboratorio profesional de ciberseguridad defensiva.
 
-Mi enfoque está orientado a:
+Cada laboratorio, investigación y proyecto tiene como finalidad:
 
-- SOC Operations
-- SIEM Administration
+- Documentar implementaciones realizadas en el laboratorio.
+- Registrar investigaciones técnicas basadas en evidencia.
+- Validar reglas de detección y mecanismos de monitoreo.
+- Desarrollar investigaciones de Threat Hunting.
+- Fortalecer capacidades de análisis e Incident Response.
+- Mantener documentación técnica clara, reproducible y organizada.
+
+Todo el contenido publicado corresponde a actividades realizadas dentro del entorno de laboratorio y documentadas utilizando una metodología uniforme.
+
+---
+
+# Mi Enfoque Profesional
+
+Mi interés está orientado al trabajo dentro de equipos **SOC** y **Blue Team**, participando en actividades como:
+
+- Security Monitoring
+- Alert Triage
+- Log Analysis
 - Threat Hunting
 - Detection Engineering
 - Incident Response
-- Security Monitoring
-- Log Analysis
+- SIEM Administration
 
----
-
-# Tecnologías
-
-## SIEM
-
-- Wazuh
-
-## Sistemas Operativos
-
-- Windows 11
-- Ubuntu Server
-- Kali Linux
-
-## Seguridad
-
-- Sysmon
-- Suricata
-- Sigma
-- YARA
-- MITRE ATT&CK
-
-## Infraestructura
-
-- VirtualBox
-- Git
-- GitHub
-- Microsoft 365
-- Microsoft Entra ID
-- Active Directory
-- FortiGate
-
----
-
-# Formación
-
-Mi formación combina experiencia profesional, educación formal y aprendizaje continuo.
-
-## Formación Académica
-
-- Tecnólogo Superior en Análisis de Sistemas.
-- Diplomado en Ciberseguridad.
-
-## Certificaciones
-
-### Microsoft
-
-- Security Engineer Career Path.
-
-### Fortinet
-
-- Fortinet Certified Fundamentals in Cybersecurity.
-- Fortinet Certified Associate in Cybersecurity.
-
-### Cisco Networking Academy
-
-- Junior Cybersecurity Analyst Career Path.
-- Networking Devices and Initial Configuration.
-- Network Addressing and Basic Troubleshooting.
-- Networking Basics.
-- Introduction to Cybersecurity.
-- Introduction to IoT.
+Considero que el aprendizaje continuo, la experimentación en laboratorio y la documentación técnica son elementos fundamentales para el crecimiento profesional en ciberseguridad.
 
 ---
 
 # Actualmente
 
-Actualmente me encuentro desarrollando:
+Actualmente continúo ampliando este laboratorio mediante:
 
-- Laboratorio profesional basado en Wazuh SIEM.
-- Investigaciones de Threat Hunting.
+- Nuevos escenarios de Threat Hunting.
+- Desarrollo y validación de reglas de detección.
 - Casos prácticos de Incident Response.
-- Desarrollo de reglas de detección.
-- Documentación técnica.
-- Proyectos orientados a Blue Team.
+- Investigaciones sobre Windows y Linux.
+- Documentación técnica de proyectos.
+- Nuevos laboratorios orientados a Blue Team.
+
+---
+
+# Principios de Trabajo
+
+La documentación de este portafolio se basa en los siguientes principios:
+
+- Evidencia antes que suposiciones.
+- Aprendizaje continuo.
+- Documentación técnica clara y reproducible.
+- Mejora continua del laboratorio.
+- Aplicación de metodologías utilizadas en la industria.
+- Desarrollo práctico basado en escenarios reales de laboratorio.
 
 ---
 
 # Objetivo Profesional
 
-Continuar desarrollándome como **SOC Analyst**, **SIEM Analyst** o integrante de un equipo **Blue Team**, contribuyendo al monitoreo, detección, investigación y respuesta ante incidentes mediante metodologías, herramientas y buenas prácticas empleadas en la industria.
+Continuar desarrollándome profesionalmente como **SOC Analyst**, **SIEM Analyst** o integrante de un equipo **Blue Team**, contribuyendo al monitoreo, detección, investigación y respuesta ante incidentes mediante el aprendizaje continuo y la aplicación de buenas prácticas de ciberseguridad defensiva.
 
 ---
 
-# Contacto
+# Más información
 
-## GitHub
+Para conocer mi experiencia profesional, formación, certificaciones y trayectoria, visita:
 
-**Fernando-Jiménez**
-
-https://github.com/fernando-jimenezh
-
----
-
-## LinkedIn
-
-**Lenin Fernando Jiménez Herrera**
-
-https://www.linkedin.com/in/lenin-fernando-jim%C3%A9nez-7750aa2b0
+- **GitHub Profile:** https://github.com/fernando-jimenezh
+- **LinkedIn:** https://www.linkedin.com/in/lenin-fernando-jim%C3%A9nez-7750aa2b0
 
 ---
 
-> *"El aprendizaje continuo, la práctica constante y la documentación técnica son pilares fundamentales para fortalecer las capacidades defensivas en ciberseguridad."*
+> *"El aprendizaje continuo, la práctica constante y la documentación técnica basada en evidencia son pilares fundamentales para fortalecer las capacidades defensivas en ciberseguridad."*
