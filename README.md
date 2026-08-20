@@ -1,208 +1,189 @@
 # Cybersecurity Portfolio
 
-> Portafolio profesional orientado a **Blue Team**, **SOC Operations**, **Threat Hunting**, **Detection Engineering** e **Incident Response**.
+<p align="center">
+  <strong>SOC Operations · SIEM · Security Monitoring · Threat Hunting · Detection Engineering · Incident Investigation</strong>
+</p>
+
+<p align="center">
+  Portafolio técnico basado en <strong>experiencia práctica de laboratorio</strong>, telemetría real generada en entornos controlados y documentación basada en evidencia.
+</p>
+
+<p align="center">
+  <a href="https://github.com/fernando-jimenezh"><strong>Perfil profesional</strong></a> ·
+  <a href="Projects/README.md"><strong>Investigaciones</strong></a> ·
+  <a href="Labs/Foundation/Environment-Setup/README.md"><strong>Laboratorio</strong></a> ·
+  <a href="Knowledge-Base/README.md"><strong>Knowledge Base</strong></a>
+</p>
 
 ---
 
-# Descripción
+## Qué demuestra este portafolio
 
-Este repositorio documenta el desarrollo de un laboratorio profesional orientado a ciberseguridad defensiva.
+Este repositorio documenta actividades realizadas en un laboratorio propio orientado a ciberseguridad defensiva. El objetivo es demostrar capacidades prácticas y trazables, no únicamente conocimiento teórico o uso aislado de herramientas.
 
-Su objetivo es demostrar competencias prácticas en **Security Monitoring**, **Threat Hunting**, **Detection Engineering** e **Incident Response** mediante escenarios implementados sobre un laboratorio propio.
-
-Cada laboratorio y proyecto refleja actividades desarrolladas utilizando metodologías, herramientas y técnicas empleadas habitualmente por equipos **SOC** y **Blue Team**.
-
-Asimismo, este portafolio documenta investigaciones técnicas, el desarrollo y validación de reglas de detección, así como el fortalecimiento continuo de las capacidades de análisis, investigación y respuesta ante incidentes.
-
----
-
-# Acerca del autor
-
-Este portafolio ha sido desarrollado y es mantenido por **Lenin Fernando Jiménez Herrera**.
-
-Para conocer más sobre mi experiencia profesional, formación, certificaciones y objetivos, visita la sección **[About-Me](About-Me/README.md)**.
-
----
-
-# Objetivos
-
-Este portafolio tiene como propósito demostrar competencias prácticas en:
-
-- SOC Operations
-- Threat Hunting
-- Detection Engineering
-- Incident Response
-- SIEM Administration
-- Blue Team Operations
-
-Cada laboratorio documenta el proceso desde la implementación hasta la validación de resultados, mientras que cada proyecto representa investigaciones reales desarrolladas dentro del laboratorio.
-
----
-
-# Tecnologías y Herramientas
-
-## SIEM
-
-- Wazuh
-
-## Sistemas Operativos
-
-- Windows 11
-- Ubuntu Server
-- Kali Linux
-
-## Seguridad
-
-- Sysmon
-- Suricata
-- Sigma
-- MITRE ATT&CK
-
-## Infraestructura
-
-- VirtualBox
-- Git
-- GitHub
-
----
-
-# Arquitectura del Laboratorio
-
-El laboratorio está diseñado para simular un entorno corporativo donde es posible generar telemetría, detectar amenazas, desarrollar investigaciones y validar reglas de detección.
+Las investigaciones siguen un flujo basado en evidencia:
 
 ```text
-                  Kali Linux
-                       │
-                       ▼
-                 Windows 11
-                       │
-                       ▼
-                 Ubuntu Server
-                       │
-                       ▼
-                  Wazuh SIEM
-                       │
-                       ▼
-                  SOC Analyst
+Actividad controlada
+        ↓
+Telemetría
+        ↓
+Security Monitoring
+        ↓
+Investigación
+        ↓
+Detection Validation
+        ↓
+Threat Hunting
+        ↓
+MITRE ATT&CK
+        ↓
+Conclusiones y recomendaciones
 ```
 
-Infraestructura principal:
+## Featured Case Studies
 
-- Wazuh Server
-- Windows 11
-- Ubuntu Server
-- Kali Linux
+### CS-001 — PowerShell EncodedCommand Investigation
 
-La infraestructura evolucionará continuamente mediante la incorporación de nuevos componentes y escenarios de seguridad.
+Investigación completa de una ejecución PowerShell con `-EncodedCommand`.
+
+**Demuestra:** Windows Event Analysis · Sysmon · Wazuh SIEM · Detection Validation · Threat Hunting · MITRE ATT&CK
+
+**Evidencia destacada:**
+- Sysmon Event ID 1.
+- Proceso `powershell.exe` y proceso padre `cmd.exe`.
+- Validación de Wazuh Rule 92057.
+- Análisis del flujo `18100 → 184665 → sysmon_event1 → 92057`.
+- Hunting sobre actividad PowerShell y EncodedCommand.
+- MITRE ATT&CK T1059.001.
+
+**[Ver CS-001 →](Projects/Case-Studies/CS-001-Investigation-PowerShell-EncodedCommand.md)**
+
+### CS-002 — Suspicious Command Prompt Investigation
+
+Caso de análisis de ejecución de `cmd.exe`, telemetría relacionada y evaluación desde la perspectiva de un analista SOC.
+
+**[Ver CS-002 →](Projects/Case-Studies/CS-002-Suspicious-Command-Prompt-Investigation.md)**
+
+### CS-003 — Windows Discovery Investigation
+
+Investigación centrada en comandos de discovery y enumeración en Windows, correlacionando comportamiento, telemetría y contexto defensivo.
+
+**[Ver CS-003 →](Projects/Case-Studies/CS-003-Windows-Discovery-Investigation.md)**
 
 ---
 
-# Estructura del Repositorio
+## Áreas de experiencia práctica
+
+| Área | Evidencia disponible |
+|---|---|
+| **Security Monitoring** | Windows/Linux telemetry, log analysis, Wazuh SIEM |
+| **Windows Investigation** | PowerShell, cmd, whoami, Sysmon Process Create |
+| **Detection Engineering** | Validación de reglas Wazuh, lógica de detección, MITRE ATT&CK |
+| **Threat Hunting** | EncodedCommand, LOLBins, Windows Discovery |
+| **Incident Investigation** | Timeline, evidence correlation, risk assessment, recommendations |
+| **SIEM Administration** | Wazuh deployment, agents, telemetry, ruleset analysis |
+
+## Investigaciones
+
+La sección `Projects` contiene la evidencia técnica principal y está organizada en cuatro perspectivas complementarias:
 
 ```text
-Cybersecurity-Portfolio
-│
-├── About-Me
-│
-├── Knowledge-Base
-│
-├── Labs
-│   ├── Foundation
-│   ├── Security-Monitoring
-│   ├── Threat-Hunting
-│   ├── Detection-Engineering
-│   ├── Incident-Response
-│   └── Purple-Team
-│
-└── Projects
-    ├── Case-Studies
-    ├── Detection-Rules
-    ├── Linux-Investigations
-    ├── Windows-Investigations
-    └── Threat-Hunting-Reports
+Projects/
+├── Case-Studies/              ← investigaciones integrales
+├── Windows-Investigations/    ← análisis de eventos y procesos
+├── Detection-Rules/           ← validación de detecciones
+└── Threat-Hunting-Reports/    ← hunting y correlación
 ```
 
----
+**[Explorar todas las investigaciones →](Projects/README.md)**
 
-# Roadmap
+## Laboratorio
 
-## Foundation
+El laboratorio permite generar y analizar telemetría de forma controlada.
 
-Construcción del laboratorio.
+```text
+Kali Linux
+    │
+    ▼
+Windows 11 / Ubuntu
+    │
+    ▼
+Sysmon / auditd / logs
+    │
+    ▼
+Wazuh SIEM
+    │
+    ▼
+SOC Analysis
+```
 
-- Environment Setup
-- Wazuh Deployment
-- Telemetry Collection
+Componentes utilizados:
 
----
+- Wazuh SIEM.
+- Windows 11.
+- Ubuntu Server.
+- Kali Linux.
+- Sysmon.
+- Suricata.
+- VirtualBox.
+- PowerShell / Bash.
 
-## Security Monitoring
+**[Ver construcción del laboratorio →](Labs/Foundation/Environment-Setup/README.md)**
 
-Implementación del monitoreo y análisis de eventos de seguridad.
+## Tecnologías
 
-- Windows Telemetry
-- Linux Telemetry
-- Log Analysis
+`Wazuh` · `Sysmon` · `Suricata` · `Sigma` · `MITRE ATT&CK` · `Windows` · `Linux` · `Kali Linux` · `PowerShell` · `Bash` · `Git` · `GitHub`
 
----
+## Principios de documentación
 
-## Threat Hunting
+Todo caso publicado debe cumplir, cuando corresponda, con:
 
-Desarrollo de investigaciones proactivas utilizando telemetría, hipótesis de investigación y técnicas asociadas al framework **MITRE ATT&CK**.
+- objetivo y alcance;
+- entorno controlado;
+- evidencia observada;
+- análisis técnico;
+- Detection Validation;
+- Threat Hunting;
+- MITRE ATT&CK mapping;
+- evaluación del analista;
+- conclusiones y recomendaciones;
+- referencias y relación con otros casos.
 
----
+La evidencia y las conclusiones se mantienen separadas de las hipótesis. Si la información disponible no permite confirmar una afirmación, se documenta explícitamente como limitación.
 
-## Detection Engineering
+## Estructura escalable
 
-Diseño, desarrollo y validación de reglas de detección utilizando **Wazuh** y **Sigma**.
+El portafolio continuará creciendo mediante nuevos casos numerados:
 
----
+```text
+CS-001
+CS-002
+CS-003
+CS-004
+...
+```
 
-## Incident Response
+Los nuevos escenarios pueden incorporar investigaciones Windows/Linux, Detection Engineering, Threat Hunting, vulnerabilidades, network security y otras áreas defensivas sin alterar la estructura principal del portafolio.
 
-Investigación de incidentes, análisis de evidencias, clasificación de eventos y documentación técnica.
+## Knowledge Base
 
----
+La Knowledge Base conserva notas y fundamentos técnicos relacionados directamente con las tecnologías y metodologías utilizadas en el laboratorio.
 
-## Purple Team
-
-Validación de controles defensivos mediante la simulación controlada de técnicas adversarias y evaluación de la capacidad de detección.
-
----
-
-# Estado del Proyecto
-
-Este portafolio evoluciona continuamente mediante la incorporación de nuevos laboratorios, investigaciones, reglas de detección y ejercicios de **Threat Hunting** desarrollados dentro del entorno de laboratorio.
-
-Toda la documentación sigue una metodología uniforme basada en:
-
-- Objetivo
-- Alcance
-- Arquitectura
-- Tecnologías utilizadas
-- Requisitos
-- Implementación
-- Configuración
-- Validación
-- Evidencias
-- Detecciones implementadas
-- Mapeo MITRE ATT&CK
-- Lecciones Aprendidas
-- Referencias
-
----
-
-# Contacto
-
-## GitHub
-
-- **Perfil:** [fernando-jimenezh](https://github.com/fernando-jimenezh)
-- **Cybersecurity Portfolio:** [Cybersecurity-Portfolio](https://github.com/fernando-jimenezh/Cybersecurity-Portfolio)
-
-## LinkedIn
-
-- **Lenin Fernando Jiménez Herrera:** [LinkedIn](https://www.linkedin.com/in/lenin-fernando-jim%C3%A9nez-7750aa2b0)
+**[Explorar Knowledge Base →](Knowledge-Base/README.md)**
 
 ---
 
-© 2026 LFJH
+## Perfil profesional
+
+Este repositorio contiene exclusivamente evidencia técnica y experiencia práctica de laboratorio.
+
+Para experiencia profesional, formación, competencias, CV y credenciales:
+
+<p align="center">
+  <strong><a href="https://github.com/fernando-jimenezh">github.com/fernando-jimenezh</a></strong>
+</p>
+
+---
+
+© 2026 Lenin Fernando Jiménez Herrera
