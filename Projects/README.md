@@ -1,42 +1,27 @@
-# Projects
+# Security Investigations
 
-## Overview
+Esta sección concentra las investigaciones prácticas desarrolladas en un laboratorio Blue Team controlado. Cada escenario se documenta desde diferentes perspectivas para demostrar cómo evoluciona un evento desde la telemetría inicial hasta una investigación completa.
 
-This section contains practical cybersecurity investigations developed in a personal Blue Team laboratory using **Wazuh SIEM**, **Sysmon**, and **Windows 11**.
-
-The objective of these projects is to demonstrate technical capabilities in:
-
-- Security Monitoring
-- Windows Event Analysis
-- Detection Engineering
-- Threat Hunting
-- Incident Investigation
-- Blue Team Operations
-
-All investigations are based on telemetry collected from the laboratory and documented using a standardized methodology.
+<p align="center">
+  <a href="../README.md"><strong>← Portafolio</strong></a> ·
+  <a href="Case-Studies/README.md"><strong>Case Studies</strong></a> ·
+  <a href="Windows-Investigations/README.md"><strong>Windows</strong></a> ·
+  <a href="Detection-Rules/README.md"><strong>Detection</strong></a> ·
+  <a href="Threat-Hunting-Reports/README.md"><strong>Threat Hunting</strong></a>
+</p>
 
 ---
 
-# Investigation Methodology
-
-Each security scenario follows the same investigation workflow.
+## Metodología
 
 ```text
-Windows Activity
-        │
-        ▼
-Telemetry Collection
-(Sysmon)
-        │
-        ▼
-Security Monitoring
-(Wazuh SIEM)
+Actividad observada
         │
         ▼
 Windows Investigation (WI)
         │
         ▼
-Detection Rule Validation (DR)
+Detection Validation (DR)
         │
         ▼
 Threat Hunting (TH)
@@ -45,147 +30,84 @@ Threat Hunting (TH)
 Case Study (CS)
 ```
 
-This methodology simulates the workflow commonly performed by Security Operations Center (SOC) analysts when investigating security events.
+Los prefijos representan distintas capas de análisis del mismo entorno, no experiencia independiente inventada:
 
----
+- **WI** — análisis técnico de eventos, procesos y telemetría Windows.
+- **DR** — validación de lógica de detección y comportamiento del SIEM.
+- **TH** — investigación proactiva para ampliar contexto y alcance.
+- **CS** — caso integral que reúne evidencia, análisis, riesgo, timeline y conclusiones.
 
-# Project Categories
+## Casos destacados
 
-## Windows Investigations (WI)
+| Caso | Tema | Capacidades demostradas |
+|---|---|---|
+| **CS-001** | PowerShell EncodedCommand | Sysmon · Wazuh · Detection Validation · Threat Hunting · MITRE ATT&CK |
+| **CS-002** | Suspicious Command Prompt | Windows Analysis · Process Investigation · SOC Assessment |
+| **CS-003** | Windows Discovery | Discovery Commands · Detection · Threat Hunting · MITRE ATT&CK |
 
-Windows Investigations focus on the analysis of individual events collected through Sysmon and Wazuh.
+### Acceso directo
 
-Each investigation includes:
+- **[CS-001 — PowerShell EncodedCommand](Case-Studies/CS-001-Investigation-PowerShell-EncodedCommand.md)**
+- **[CS-002 — Suspicious Command Prompt](Case-Studies/CS-002-Suspicious-Command-Prompt-Investigation.md)**
+- **[CS-003 — Windows Discovery](Case-Studies/CS-003-Windows-Discovery-Investigation.md)**
 
-- Event identification
-- Telemetry analysis
-- Process investigation
-- Parent-child process relationships
-- MITRE ATT&CK mapping
-- SOC analyst assessment
+## Windows Investigations
 
-Current investigations
+| ID | Investigación |
+|---|---|
+| **WI-001** | [PowerShell EncodedCommand](Windows-Investigations/WI-001-PowerShell-EncodedCommand.md) |
+| **WI-002** | [Command Prompt Execution](Windows-Investigations/WI-002-cmd-Execution.md) |
+| **WI-003** | [whoami Enumeration](Windows-Investigations/WI-003-whoami-Enumeration.md) |
 
-| ID | Investigation |
-|----|---------------|
-| WI-001 | PowerShell EncodedCommand |
-| WI-002 | Command Prompt Execution |
-| WI-003 | whoami Enumeration |
+## Detection Validation
 
----
+| ID | Validación |
+|---|---|
+| **DR-001** | [Wazuh Rule 92057 — PowerShell EncodedCommand](Detection-Rules/DR-001-Validate-Wazuh-Rule-92057-PowerShell-EncodedCommand.md) |
+| **DR-002** | [Wazuh Rule 92004 — PowerShell spawning Command Prompt](Detection-Rules/DR-002-Validate-Wazuh-Rule-92004-PowerShell-Spawning-Command-Prompt.md) |
+| **DR-003** | [whoami Enumeration](Detection-Rules/DR-003-Detect-whoami-Enumeration.md) |
 
-## Detection Rules (DR)
+## Threat Hunting Reports
 
-Detection Rule projects validate how Wazuh detects a specific technique.
+| ID | Investigación |
+|---|---|
+| **TH-001** | [PowerShell EncodedCommand](Threat-Hunting-Reports/TH-001-PowerShell-EncodedCommand.md) |
+| **TH-002** | [LOLBins Activity](Threat-Hunting-Reports/TH-002-LOLBins-Activity.md) |
+| **TH-003** | [Windows Discovery Commands](Threat-Hunting-Reports/TH-003-Windows-Discovery-Commands.md) |
 
-These projects include:
+## Estructura para nuevos casos
 
-- Native rule validation
-- Ruleset analysis
-- Detection logic
-- Custom rule development (when required)
-- Detection testing
+El portafolio está preparado para continuar creciendo sin cambiar su navegación principal.
 
-Current projects
+```text
+Nuevo escenario
+│
+├── WI-00X   (si requiere investigación Windows)
+├── DR-00X   (si requiere validación de detección)
+├── TH-00X   (si requiere hunting)
+└── CS-00X   (caso integral)
+```
 
-| ID | Project |
-|----|----------|
-| DR-001 | Validate Native Rule 92057 |
-| DR-002 | Validate Native Rule 92004 |
-| DR-003 | Detect whoami Enumeration |
+No todos los escenarios necesitan producir las cuatro piezas. Solo se publica la documentación que corresponda a evidencia realmente obtenida.
 
----
+## Estándar documental
 
-## Threat Hunting Reports (TH)
+Los casos deben incluir, cuando aplique:
 
-Threat Hunting projects expand the investigation beyond the initial alert.
+- resumen ejecutivo;
+- objetivo y alcance;
+- entorno;
+- escenario;
+- evidencia;
+- análisis técnico;
+- Detection Validation;
+- Threat Hunting;
+- MITRE ATT&CK mapping;
+- evaluación de riesgo;
+- recomendaciones;
+- lecciones aprendidas;
+- conclusión;
+- referencias;
+- proyectos relacionados.
 
-Typical hunting activities include:
-
-- Searching for similar executions
-- Identifying affected endpoints
-- Reviewing related users
-- Correlating parent-child processes
-- Evaluating the scope of the activity
-
-Current reports
-
-| ID | Investigation |
-|----|---------------|
-| TH-001 | PowerShell EncodedCommand |
-| TH-002 | LOLBins Activity |
-| TH-003 | Windows Discovery Commands |
-
----
-
-## Case Studies (CS)
-
-Case Studies consolidate all previous investigations into a complete security investigation.
-
-Each case study combines:
-
-- Windows Investigation
-- Detection Validation
-- Threat Hunting
-- Technical Analysis
-- Risk Assessment
-- Conclusions
-- Lessons Learned
-
-Current case studies
-
-| ID | Investigation |
-|----|---------------|
-| CS-001 | PowerShell EncodedCommand Investigation |
-| CS-002 | Suspicious Command Prompt Investigation |
-| CS-003 | Windows Discovery Investigation |
-
----
-
-# Standard Investigation Structure
-
-Every project follows the same documentation format.
-
-- Executive Summary
-- Objective
-- Environment
-- Scenario
-- Evidence
-- Technical Analysis
-- Detection Validation (when applicable)
-- Threat Hunting Assessment (when applicable)
-- MITRE ATT&CK Mapping
-- Risk Assessment
-- Recommendations
-- Lessons Learned
-- Conclusion
-- References
-- Related Projects
-
----
-
-# Technologies Used
-
-- Wazuh SIEM
-- Sysmon
-- Windows 11
-- VirtualBox
-- PowerShell
-- Windows Event Logs
-- MITRE ATT&CK
-
----
-
-# Repository Goal
-
-The purpose of this repository is to document practical cybersecurity investigations that demonstrate skills related to:
-
-- Security Monitoring
-- SOC Operations
-- Detection Engineering
-- Threat Hunting
-- Incident Investigation
-- Windows Security
-- Blue Team Methodologies
-
-Each investigation is based on real telemetry generated within the laboratory and follows a repeatable investigation methodology similar to that used by Security Operations Centers (SOC).
+El criterio principal es **evidencia antes que suposiciones**.
