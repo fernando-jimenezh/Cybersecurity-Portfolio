@@ -1,180 +1,87 @@
 # Knowledge Base
 
-## Descripción
+Esta sección reúne únicamente documentación técnica relacionada con tecnologías, metodologías y conceptos utilizados de forma práctica dentro del laboratorio y de las investigaciones publicadas en este portafolio.
 
-La **Knowledge Base** reúne la documentación técnica utilizada durante el desarrollo del laboratorio de ciberseguridad y los distintos proyectos incluidos en este portafolio.
+> La Knowledge Base no pretende ser una enciclopedia general de ciberseguridad. Su función es documentar fundamentos que tengan relación directa con evidencia, casos o implementaciones realizadas.
 
-Su objetivo es centralizar conceptos, metodologías, herramientas y procedimientos que sirven como apoyo para las actividades de **Security Monitoring**, **Threat Hunting**, **Detection Engineering** e **Incident Response**.
-
-Todo el contenido se basa en documentación oficial, buenas prácticas de la industria y experiencias obtenidas durante la implementación del laboratorio.
-
----
-
-# Objetivos
-
-- Consolidar conocimientos técnicos.
-- Documentar herramientas utilizadas en el laboratorio.
-- Servir como material de consulta rápida.
-- Relacionar conceptos con implementaciones prácticas.
-- Complementar los laboratorios y proyectos del portafolio.
+<p align="center">
+  <a href="../README.md"><strong>← Portafolio</strong></a> ·
+  <a href="../Projects/README.md"><strong>Investigaciones</strong></a> ·
+  <a href="../Labs/Foundation/Environment-Setup/README.md"><strong>Laboratorio</strong></a>
+</p>
 
 ---
 
-# Contenido
+## Áreas de conocimiento aplicadas
 
-## SIEM
+### SIEM & Security Monitoring
 
-Conceptos fundamentales sobre **Security Information and Event Management**, arquitectura, casos de uso y funcionamiento de las plataformas SIEM.
+- Arquitectura y operación de SIEM.
+- Ingesta y correlación de eventos.
+- Wazuh Manager, Indexer, Dashboard y Agents.
+- Rulesets, alertas y validación de detecciones.
 
----
+### Windows Security
 
-## Wazuh
+- Windows Event Logs.
+- Sysmon.
+- Process Creation.
+- PowerShell Logging.
+- Parent-child process relationships.
+- Análisis de línea de comandos.
 
-Documentación relacionada con:
+### Linux Security
 
-- Arquitectura
-- Manager
-- Indexer
-- Dashboard
-- Agents
-- Rules
-- Decoders
-- Integraciones
-- Buenas prácticas
+- Syslog.
+- auditd.
+- journalctl.
+- Procesos, permisos y registros.
 
----
+### Detection Engineering
 
-## Windows
+- Validación de reglas.
+- Lógica de detección.
+- Sigma.
+- Cobertura y mapeo MITRE ATT&CK.
+- Revisión de contenido nativo antes de crear reglas personalizadas.
 
-Información relacionada con:
+### Threat Hunting
 
-- Event Logs
-- Security Logs
-- PowerShell Logging
-- Sysmon
-- Auditoría
-- Administración de eventos
-
----
-
-## Linux
-
-Documentación sobre:
-
-- Syslog
-- auditd
-- Journalctl
-- Gestión de registros
-- Permisos
-- Procesos
-- Seguridad
-
----
-
-## Networking
-
-Conceptos relacionados con:
-
-- TCP/IP
-- DNS
-- DHCP
-- HTTP
-- HTTPS
-- SSH
-- RDP
-- SMB
-- LDAP
-- Kerberos
-
----
-
-## MITRE ATT&CK
-
-Documentación de:
-
-- Tácticas
-- Técnicas
-- Procedimientos (TTPs)
-- Casos de uso
-- Mapeo de detecciones
-
----
-
-## Sigma
-
-Información relacionada con:
-
-- Sintaxis
-- Estructura
-- Buenas prácticas
-- Conversión de reglas
-- Casos de detección
-
----
-
-## YARA
-
-Conceptos sobre:
-
-- Sintaxis
-- Reglas
-- Detección de malware
-- Casos de uso
-
----
-
-## Threat Hunting
-
-Metodologías utilizadas para:
-
-- Investigación basada en hipótesis.
-- IOC Hunting.
+- Hunting basado en hipótesis.
 - Behavioral Analysis.
+- Correlación de endpoint, usuario, procesos y comandos.
 - Hunting basado en MITRE ATT&CK.
 
----
+### Networking & Infrastructure Security
 
-## Detection Engineering
+- TCP/IP, DNS, DHCP, HTTP/HTTPS, SSH, RDP, SMB, LDAP y Kerberos.
+- Redes de laboratorio y virtualización.
+- Observabilidad y análisis de conectividad.
 
-Documentación sobre:
+## Criterio de publicación
 
-- Casos de detección.
-- Correlation Rules.
-- Alertas.
-- Validación.
-- Optimización de reglas.
+Un documento nuevo debe cumplir al menos una de estas condiciones:
 
----
+1. Explicar una tecnología utilizada en un caso publicado.
+2. Documentar una metodología aplicada en una investigación.
+3. Registrar un procedimiento técnico validado en laboratorio.
+4. Servir como referencia para reproducir o comprender evidencia existente.
 
-## Incident Response
+La prioridad seguirá siendo mantener una base pequeña, útil y verificable antes que publicar grandes volúmenes de teoría sin aplicación práctica.
 
-Información relacionada con:
+## Próxima evolución
 
-- Preparación.
-- Identificación.
-- Contención.
-- Erradicación.
-- Recuperación.
-- Lecciones aprendidas.
+A medida que el portafolio crezca, esta sección podrá incorporar documentos independientes sobre temas como:
 
----
+```text
+Knowledge-Base/
+├── Wazuh/
+├── Windows/
+├── Linux/
+├── MITRE-ATTACK/
+├── Detection-Engineering/
+├── Threat-Hunting/
+└── Networking/
+```
 
-# Organización
-
-Cada tema será documentado de forma independiente y podrá incluir:
-
-- Definiciones.
-- Arquitectura.
-- Diagramas.
-- Configuraciones.
-- Ejemplos.
-- Comandos.
-- Capturas de pantalla.
-- Referencias oficiales.
-- Laboratorios relacionados.
-
----
-
-# Objetivo del Repositorio
-
-La **Knowledge Base** complementa los laboratorios prácticos y los proyectos desarrollados dentro de este portafolio, permitiendo comprender el fundamento técnico detrás de cada implementación.
+Las carpetas se crearán únicamente cuando exista contenido técnico suficiente para justificarlas.
