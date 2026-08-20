@@ -1,16 +1,17 @@
 # Cybersecurity Portfolio
 
 <p align="center">
-  <strong>SOC Operations · SIEM · Security Monitoring · Threat Hunting · Detection Engineering · Incident Investigation</strong>
+  <strong>SOC Operations · SIEM · Security Monitoring · Threat Hunting · Detection Engineering · Security Automation · AI-assisted Security Operations</strong>
 </p>
 
 <p align="center">
-  Portafolio técnico basado en <strong>experiencia práctica de laboratorio</strong>, telemetría real generada en entornos controlados y documentación basada en evidencia.
+  Portafolio técnico basado en <strong>experiencia práctica de laboratorio</strong>, telemetría real generada en entornos controlados, automatización y documentación basada en evidencia.
 </p>
 
 <p align="center">
   <a href="https://github.com/fernando-jimenezh"><strong>Perfil profesional</strong></a> ·
   <a href="Projects/README.md"><strong>Investigaciones</strong></a> ·
+  <a href="Projects/AI-Security-Automation/README.md"><strong>AI Security Automation</strong></a> ·
   <a href="Labs/Foundation/Environment-Setup/README.md"><strong>Laboratorio</strong></a> ·
   <a href="Knowledge-Base/README.md"><strong>Knowledge Base</strong></a>
 </p>
@@ -41,7 +42,50 @@ MITRE ATT&CK
 Conclusiones y recomendaciones
 ```
 
-## Featured Case Studies
+En paralelo, el laboratorio incorpora una línea de trabajo de **IA aplicada a operaciones técnicas**, donde el modelo interpreta solicitudes y una capa de control decide qué acciones pueden ejecutarse realmente.
+
+```text
+Solicitud en lenguaje natural
+        ↓
+LLM local
+        ↓
+Agente / API
+        ↓
+Validación y autorización
+        ↓
+Runner Linux controlado
+        ↓
+Tool autorizada
+        ↓
+Parser determinístico
+        ↓
+Resultado estructurado
+        ↓
+Interpretación por IA
+```
+
+> La documentación pública describe la arquitectura y las capacidades técnicas sin exponer identificadores internos, topología privada, credenciales, endpoints, información de clientes ni otros detalles operativos sensibles.
+
+## Featured Projects
+
+### AI-001 — Private AI Security Orchestration Lab
+
+Diseño e implementación de una arquitectura privada de IA orientada a automatización y operaciones técnicas de seguridad.
+
+**Demuestra:** Local LLM · Ollama · Web UI · REST API · Agent Architecture · Tool Orchestration · Linux · Security Controls · Deterministic Parsing
+
+**Capacidades implementadas:**
+- despliegue de un modelo LLM local;
+- integración mediante interfaz Web;
+- diseño de una capa de agente/API;
+- separación entre razonamiento y ejecución;
+- allowlist de tools y validación de parámetros;
+- ejecución técnica en runner Linux aislado;
+- auditoría y timeouts;
+- parsing determinístico antes del análisis por IA;
+- validación end-to-end de una operación técnica real.
+
+**[Ver AI-001 →](Projects/AI-Security-Automation/AI-001-Private-AI-Security-Orchestration.md)**
 
 ### CS-001 — PowerShell EncodedCommand Investigation
 
@@ -83,20 +127,23 @@ Investigación centrada en comandos de discovery y enumeración en Windows, corr
 | **Threat Hunting** | EncodedCommand, LOLBins, Windows Discovery |
 | **Incident Investigation** | Timeline, evidence correlation, risk assessment, recommendations |
 | **SIEM Administration** | Wazuh deployment, agents, telemetry, ruleset analysis |
+| **Security Automation** | APIs, agents, tool execution, structured outputs y controles de ejecución |
+| **Applied AI** | Local LLM deployment, orchestration, deterministic parsing y AI-assisted technical workflows |
 
-## Investigaciones
+## Investigaciones y proyectos
 
-La sección `Projects` contiene la evidencia técnica principal y está organizada en cuatro perspectivas complementarias:
+La sección `Projects` concentra la evidencia técnica principal:
 
 ```text
 Projects/
-├── Case-Studies/              ← investigaciones integrales
-├── Windows-Investigations/    ← análisis de eventos y procesos
-├── Detection-Rules/           ← validación de detecciones
-└── Threat-Hunting-Reports/    ← hunting y correlación
+├── AI-Security-Automation/     ← IA aplicada y automatización segura
+├── Case-Studies/               ← investigaciones integrales
+├── Windows-Investigations/     ← análisis de eventos y procesos
+├── Detection-Rules/            ← validación de detecciones
+└── Threat-Hunting-Reports/     ← hunting y correlación
 ```
 
-**[Explorar todas las investigaciones →](Projects/README.md)**
+**[Explorar todos los proyectos →](Projects/README.md)**
 
 ## Laboratorio
 
@@ -128,12 +175,15 @@ Componentes utilizados:
 - Suricata.
 - VirtualBox.
 - PowerShell / Bash.
+- Ollama.
+- Open WebUI.
+- REST APIs y agentes de automatización.
 
 **[Ver construcción del laboratorio →](Labs/Foundation/Environment-Setup/README.md)**
 
 ## Tecnologías
 
-`Wazuh` · `Sysmon` · `Suricata` · `Sigma` · `MITRE ATT&CK` · `Windows` · `Linux` · `Kali Linux` · `PowerShell` · `Bash` · `Git` · `GitHub`
+`Wazuh` · `Sysmon` · `Suricata` · `Sigma` · `MITRE ATT&CK` · `Windows` · `Linux` · `Kali Linux` · `PowerShell` · `Bash` · `Ollama` · `Open WebUI` · `Local LLM` · `REST API` · `Git` · `GitHub`
 
 ## Principios de documentación
 
@@ -150,21 +200,34 @@ Todo caso publicado debe cumplir, cuando corresponda, con:
 - conclusiones y recomendaciones;
 - referencias y relación con otros casos.
 
+Para proyectos de automatización e IA se añaden además:
+
+- separación entre interpretación y ejecución;
+- validación de parámetros;
+- control de alcance;
+- auditoría;
+- resultados estructurados;
+- protección de información sensible.
+
 La evidencia y las conclusiones se mantienen separadas de las hipótesis. Si la información disponible no permite confirmar una afirmación, se documenta explícitamente como limitación.
 
 ## Estructura escalable
 
-El portafolio continuará creciendo mediante nuevos casos numerados:
+El portafolio continuará creciendo mediante nuevos casos y proyectos numerados:
 
 ```text
 CS-001
 CS-002
 CS-003
-CS-004
+...
+
+AI-001
+AI-002
+AI-003
 ...
 ```
 
-Los nuevos escenarios pueden incorporar investigaciones Windows/Linux, Detection Engineering, Threat Hunting, vulnerabilidades, network security y otras áreas defensivas sin alterar la estructura principal del portafolio.
+Los nuevos escenarios pueden incorporar investigaciones Windows/Linux, Detection Engineering, Threat Hunting, vulnerabilidades, network security, automatización e IA aplicada sin alterar la estructura principal del portafolio.
 
 ## Knowledge Base
 
