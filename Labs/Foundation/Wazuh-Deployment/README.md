@@ -1,217 +1,214 @@
-# Foundation - Wazuh Deployment
+# Foundation — Wazuh Deployment
 
 ## Objetivo
 
-Implementar una plataforma **SIEM** basada en **Wazuh** que permita centralizar eventos de seguridad, administrar agentes, generar alertas y servir como plataforma principal para las actividades de **Security Monitoring**, **Threat Hunting**, **Detection Engineering** e **Incident Response**.
+Implementar una plataforma **SIEM** basada en **Wazuh** que permita centralizar eventos de seguridad, administrar agentes, generar alertas y servir como plataforma principal para actividades de **Security Monitoring**, **Threat Hunting**, **Detection Engineering** e **Incident Response**.
 
 ---
 
-# Alcance
+## Alcance
 
-Este laboratorio contempla la instalación y configuración inicial de la plataforma Wazuh.
+Este laboratorio contempla la instalación y configuración inicial de Wazuh sobre un servidor Ubuntu dedicado al laboratorio.
 
 Incluye:
 
-- Instalación del servidor.
-- Configuración del SIEM.
-- Instalación del Dashboard.
-- Configuración del Indexer.
-- Validación de servicios.
-- Acceso a la interfaz web.
-- Registro inicial de agentes.
+- preparación del servidor;
+- instalación de Wazuh Manager;
+- instalación y configuración de Wazuh Indexer;
+- instalación y configuración de Wazuh Dashboard;
+- configuración de Filebeat y certificados;
+- validación de servicios;
+- acceso a la interfaz web;
+- registro inicial de agentes.
 
-No contempla la generación de telemetría, la cual será desarrollada en el laboratorio **Telemetry Collection**.
+La generación y validación detallada de telemetría se documenta en **Telemetry Collection**.
 
 ---
 
-# Arquitectura
+## Arquitectura
 
-La plataforma fue desplegada sobre **Ubuntu Server**, utilizando una instalación distribuida por componentes.
+La plataforma se desplegó en un **Ubuntu Server** con los componentes principales de Wazuh alojados en el mismo servidor del laboratorio. Este patrón corresponde a un despliegue **all-in-one**, aunque internamente los servicios mantienen funciones separadas.
 
-La infraestructura quedó conformada por:
+```text
+Endpoints
+   │
+   ▼
+Wazuh Agents
+   │
+   ▼
+Wazuh Manager / Analysis Engine
+   │
+   ▼
+Filebeat
+   │
+   ▼
+Wazuh Indexer
+   │
+   ▼
+Wazuh Dashboard
+```
+
+### Componentes
 
 | Componente | Función |
-|------------|----------|
-| Wazuh Manager | Recepción y procesamiento de eventos |
-| Wazuh Indexer | Almacenamiento e indexación |
-| Wazuh Dashboard | Visualización y administración |
-| Filebeat | Envío de eventos |
-| Wazuh API | Comunicación entre servicios |
+|---|---|
+| **Wazuh Manager** | Recepción de datos de agentes, análisis de eventos y aplicación del ruleset |
+| **Wazuh Indexer** | Almacenamiento, indexación y consulta de datos de seguridad |
+| **Wazuh Dashboard** | Visualización, búsqueda y administración mediante interfaz web |
+| **Filebeat** | Transporte de alertas y eventos procesados desde el servidor Wazuh hacia el Indexer |
+| **Wazuh API** | Interfaz de administración y consulta de funciones del servidor Wazuh |
 
 ---
 
-# Tecnologías Utilizadas
+## Tecnologías utilizadas
 
-## SIEM
-
-- Wazuh
-
-## Sistemas Operativos
-
-- Ubuntu Server
-
-## Componentes
-
-- Wazuh Manager
-- Wazuh Indexer
-- Wazuh Dashboard
-- Filebeat
+- Ubuntu Server.
+- Wazuh Manager.
+- Wazuh Indexer.
+- Wazuh Dashboard.
+- Filebeat.
+- Wazuh API.
 
 ---
 
-# Requisitos
+## Requisitos
 
 Para la implementación se consideró:
 
-- Ubuntu Server actualizado.
-- Acceso a Internet.
-- Resolución DNS funcional.
-- Sincronización horaria.
-- Recursos suficientes para ejecutar los servicios.
+- Ubuntu Server actualizado;
+- acceso a Internet para instalación y actualización;
+- resolución DNS funcional;
+- sincronización horaria;
+- recursos suficientes de CPU, RAM y almacenamiento;
+- conectividad entre endpoints y servidor Wazuh.
 
 ---
 
-# Implementación
+## Implementación
 
 Las principales actividades realizadas fueron:
 
 1. Preparación del servidor.
 2. Actualización del sistema operativo.
-3. Descarga del instalador oficial.
-4. Instalación de Wazuh.
-5. Instalación del Indexer.
-6. Instalación del Dashboard.
+3. Descarga de los componentes mediante los procedimientos oficiales de Wazuh.
+4. Instalación y configuración de Wazuh Manager.
+5. Instalación y configuración de Wazuh Indexer.
+6. Instalación y configuración de Wazuh Dashboard.
 7. Configuración de certificados.
-8. Configuración del servicio Filebeat.
-9. Inicio de servicios.
-10. Validación del entorno.
+8. Configuración de Filebeat.
+9. Inicio y validación de servicios.
+10. Acceso al Dashboard.
+11. Registro inicial de agentes.
 
 ---
 
-# Configuración
+## Configuración
 
-Durante la implementación se configuraron:
+### Wazuh Manager
 
-## Wazuh Manager
+- gestión de agentes;
+- recepción y procesamiento de eventos;
+- aplicación de decoders y rulesets;
+- generación de alertas.
 
-- Gestión de agentes.
-- Recepción de eventos.
-- Reglas de detección.
+### Wazuh Indexer
 
----
+- almacenamiento de información;
+- indexación;
+- consulta de datos;
+- comunicación segura mediante certificados.
 
-## Wazuh Indexer
+### Wazuh Dashboard
 
-Configuración del almacenamiento de eventos y comunicación segura mediante certificados.
+- acceso web;
+- visualización de alertas y eventos;
+- administración y consulta del entorno.
 
----
+### Filebeat
 
-## Wazuh Dashboard
-
-Configuración del acceso web y conexión con el Indexer para la visualización de alertas.
-
----
-
-## Filebeat
-
-Configurado para el envío de eventos hacia el Indexer.
+Configurado para remitir hacia el Indexer los datos procesados por el servidor Wazuh.
 
 ---
 
-# Validación
+## Validación
 
 Se verificó el correcto funcionamiento de:
 
-- Wazuh Manager
-- Wazuh Indexer
-- Wazuh Dashboard
-- Filebeat
-- API
+- Wazuh Manager;
+- Wazuh Indexer;
+- Wazuh Dashboard;
+- Filebeat;
+- Wazuh API.
 
-Se comprobó además:
+Además se comprobó:
 
-- Acceso a la interfaz web.
-- Estado de los servicios.
-- Comunicación entre componentes.
-- Recepción de eventos.
-
----
-
-# Problemas Encontrados
-
-Durante la implementación se presentaron distintos inconvenientes propios de un despliegue completo.
-
-Entre ellos:
-
-- Problemas de comunicación entre el Dashboard y el Indexer.
-- Configuración incorrecta de certificados.
-- Variables de entorno relacionadas con Java.
-- Reinicio de servicios.
-- Configuración de permisos.
-- Validación de índices.
-
-Cada uno de estos incidentes fue documentado y resuelto antes de continuar con la implementación del laboratorio.
+- acceso a la interfaz web;
+- estado de servicios;
+- comunicación entre componentes;
+- registro de agentes;
+- recepción y visualización de eventos.
 
 ---
 
-# Solución Aplicada
+## Problemas encontrados y troubleshooting
 
-Los problemas fueron solucionados mediante:
+Durante el despliegue se presentaron incidencias propias de la configuración de una plataforma SIEM, entre ellas:
 
-- Revisión de logs.
-- Validación de configuración.
-- Corrección de certificados.
-- Reconfiguración de variables de entorno.
-- Reinicio controlado de servicios.
-- Verificación mediante comandos administrativos.
+- comunicación entre Dashboard e Indexer;
+- certificados;
+- permisos;
+- variables de entorno y dependencias;
+- reinicio y validación de servicios;
+- verificación de índices.
 
----
+La resolución se apoyó en:
 
-# Evidencias
-
-Las evidencias consideradas para este laboratorio incluyen:
-
-- Estado de los servicios.
-- Capturas del Dashboard.
-- Registro del Indexer.
-- Estado del Manager.
-- Comunicación entre componentes.
-- Primer acceso al Dashboard.
-
-Las capturas serán incorporadas conforme avance la documentación del proyecto.
+- revisión de logs;
+- validación de archivos de configuración;
+- corrección de certificados y permisos;
+- reinicio controlado de servicios;
+- comprobaciones administrativas.
 
 ---
 
-# Detecciones Implementadas
+## Evidencia
 
-En esta etapa únicamente se validó el funcionamiento del SIEM.
+Las evidencias consideradas incluyen:
 
-Las reglas personalizadas serán desarrolladas en los laboratorios de **Detection Engineering**.
-
----
-
-# Mapeo MITRE ATT&CK
-
-No aplica.
-
-Este laboratorio corresponde a la implementación de la infraestructura de monitoreo.
+- estado de servicios;
+- acceso al Dashboard;
+- estado del Manager;
+- estado del Indexer;
+- comunicación entre componentes;
+- registro de agentes;
+- eventos y alertas visibles tras las primeras pruebas.
 
 ---
 
-# Lecciones Aprendidas
+## Detecciones implementadas
 
-- La correcta planificación reduce significativamente los tiempos de implementación.
+En esta etapa el objetivo principal fue validar la infraestructura del SIEM. Las detecciones específicas y reglas personalizadas se documentan en **Detection Engineering** y en los proyectos asociados.
+
+---
+
+## Mapeo MITRE ATT&CK
+
+No aplica de forma directa al despliegue de infraestructura. MITRE ATT&CK se utiliza posteriormente para mapear comportamientos, detecciones e investigaciones.
+
+---
+
+## Lecciones aprendidas
+
+- Comprender la separación funcional entre Manager, Indexer y Dashboard facilita el troubleshooting.
 - La validación de certificados es crítica para la comunicación entre componentes.
-- La revisión de logs facilita la resolución de incidentes durante el despliegue.
-- Documentar cada cambio permite reproducir el laboratorio de forma consistente.
-- Comprender la arquitectura de Wazuh facilita futuras tareas de administración y troubleshooting.
+- La revisión de logs es fundamental durante el despliegue.
+- Documentar cada cambio mejora la repetibilidad del laboratorio.
+- Un despliegue all-in-one puede mantener los componentes lógicamente separados aunque residan en el mismo servidor.
 
 ---
 
-# Referencias
+## Referencias
 
-- Wazuh Documentation
-
-- OpenSearch Documentation
-
-- Ubuntu Documentation
+- Wazuh Documentation.
+- OpenSearch Documentation.
+- Ubuntu Documentation.
