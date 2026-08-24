@@ -1,4 +1,4 @@
-# Security Monitoring - Windows Telemetry
+# Security Monitoring — Windows Telemetry
 
 ## Objetivo
 
@@ -6,198 +6,189 @@ Implementar y validar la recolección de eventos de seguridad en **Windows 11** 
 
 ---
 
-# Alcance
+## Alcance
 
-Este laboratorio contempla la configuración de las principales fuentes de eventos de Windows utilizadas por un **SOC**.
+Este laboratorio contempla la configuración y validación de las principales fuentes de telemetría utilizadas durante actividades SOC en Windows.
 
 Incluye:
 
-- Windows Event Logs.
-- Sysmon.
-- Wazuh Agent.
-- Validación de eventos.
-- Recepción de telemetría en Wazuh.
+- Windows Event Logs;
+- Sysmon;
+- Wazuh Agent;
+- validación de eventos;
+- recepción y procesamiento de telemetría en Wazuh.
 
-No contempla la creación de reglas de detección, actividad que será desarrollada en laboratorios posteriores.
+No contempla como objetivo principal el desarrollo de reglas de detección personalizadas.
 
 ---
 
-# Arquitectura
+## Arquitectura
 
-```
+```text
 Windows 11
-      │
-      │ Windows Event Logs
-      │ Sysmon
-      ▼
-Wazuh Agent
-      │
-      ▼
-Wazuh Manager
-      │
-      ▼
-Indexer
-      │
-      ▼
-Dashboard
+    │
+    ├── Windows Event Logs
+    └── Sysmon
+           │
+           ▼
+       Wazuh Agent
+           │
+           ▼
+       Wazuh Manager
+           │
+           ▼
+       Wazuh Indexer
+           │
+           ▼
+       Wazuh Dashboard
 ```
 
-Toda la telemetría generada en el endpoint es enviada hacia Wazuh para su procesamiento y almacenamiento.
+Windows Event Logs y Sysmon proporcionan fuentes complementarias. Wazuh Agent recopila los eventos configurados y los envía a Wazuh Manager para su procesamiento; posteriormente se almacenan e indexan en Wazuh Indexer.
 
 ---
 
-# Tecnologías Utilizadas
+## Tecnologías utilizadas
 
-## Sistemas Operativos
-
-- Windows 11
-
-## Herramientas
-
-- Wazuh Agent
-- Sysmon
-- Event Viewer
-- PowerShell
+- Windows 11.
+- Wazuh Agent.
+- Sysmon.
+- Event Viewer.
+- PowerShell.
 
 ---
 
-# Requisitos
+## Requisitos
 
 Antes de iniciar este laboratorio se verificó:
 
-- Wazuh Manager operativo.
-- Agente registrado.
-- Comunicación con el servidor.
-- Sincronización horaria.
-- Acceso al Dashboard.
+- Wazuh Manager operativo;
+- agente registrado;
+- comunicación con el servidor;
+- sincronización horaria;
+- acceso al Dashboard;
+- Sysmon instalado y configurado.
 
 ---
 
-# Implementación
+## Implementación
 
 Las actividades realizadas fueron:
 
-1. Instalación del agente Wazuh.
+1. Instalación del Wazuh Agent.
 2. Instalación de Sysmon.
 3. Aplicación de la configuración de Sysmon.
-4. Reinicio del servicio.
-5. Validación de eventos.
-6. Confirmación de recepción en Wazuh.
+4. Configuración de Windows Event Logs relevantes.
+5. Reinicio controlado de servicios cuando fue necesario.
+6. Generación de eventos de prueba.
+7. Confirmación de recepción en Wazuh.
 
 ---
 
-# Configuración
+## Configuración
 
-## Windows Event Logs
+### Windows Event Logs
 
-Se monitorearon principalmente los registros:
+Se monitorearon principalmente registros como:
 
-- Security
-- System
-- Application
+- Security;
+- System;
+- Application;
+- canales adicionales cuando el escenario lo requería.
 
----
+Windows Event Logs proporcionan eventos de autenticación, cambios del sistema, instalación de servicios, tareas programadas y otras actividades registradas por Windows.
 
-## Sysmon
+### Sysmon
 
-Se habilitó la generación de eventos relacionados con:
+Sysmon se utilizó para ampliar la visibilidad sobre actividades como:
 
-- Creación de procesos.
-- Conexiones de red.
-- Creación de archivos.
-- Carga de DLL.
-- Cambios en el Registro.
-- Creación de servicios.
-- Tareas programadas.
+- **Process Create**;
+- conexiones de red, cuando están habilitadas;
+- creación o modificación de archivos según la configuración;
+- carga de imágenes/DLL;
+- cambios en el Registro;
+- otras categorías soportadas por la versión y configuración aplicada.
 
----
-
-# Eventos Relevantes
-
-Durante este laboratorio se validó la generación de eventos como:
-
-- Inicio y cierre de sesión.
-- Ejecución de PowerShell.
-- Ejecución de CMD.
-- Creación de procesos.
-- Conexiones de red.
-- Cambios en el sistema.
-
-Estos eventos constituyen una fuente fundamental para actividades de **Threat Hunting**.
+> La creación de servicios y de tareas programadas no corresponde a eventos específicos de Sysmon. Estas actividades se investigan principalmente mediante **Windows Event Logs** y la telemetría asociada a procesos, Registro u otras fuentes complementarias.
 
 ---
 
-# Validación
+## Eventos relevantes
+
+Durante el laboratorio se validó la disponibilidad de información relacionada con:
+
+- inicio y cierre de sesión desde Windows Event Logs;
+- ejecución de PowerShell;
+- ejecución de `cmd.exe`;
+- creación de procesos mediante Sysmon Event ID 1;
+- conexiones de red cuando la configuración de Sysmon lo permite;
+- cambios del sistema visibles mediante las fuentes configuradas.
+
+---
+
+## Validación
 
 Se verificó:
 
-- Estado del agente.
-- Recepción de eventos.
-- Eventos Sysmon.
-- Windows Event Logs.
-- Visualización desde Wazuh Dashboard.
+- estado del agente;
+- recepción de Windows Event Logs;
+- recepción de eventos Sysmon;
+- procesamiento por Wazuh Manager;
+- visualización desde Wazuh Dashboard;
+- consistencia entre evento original y datos disponibles para investigación.
 
 ---
 
-# Evidencias
+## Evidencias
 
 Las evidencias documentadas incluyen:
 
-- Configuración del agente.
-- Instalación de Sysmon.
-- Eventos generados.
-- Capturas del Dashboard.
-- Validación de eventos.
+- configuración del agente;
+- instalación y configuración de Sysmon;
+- eventos generados;
+- eventos Windows relevantes;
+- capturas o registros del Dashboard;
+- validación de campos utilizados posteriormente en investigaciones.
 
 ---
 
-# Detecciones Implementadas
+## Detecciones implementadas
 
-En esta etapa únicamente se valida la correcta recepción de telemetría.
-
-Las reglas personalizadas serán desarrolladas posteriormente.
+En esta etapa se prioriza la correcta recepción de telemetría. La validación de reglas nativas y personalizadas se documenta en **Detection Engineering** y en los proyectos DR.
 
 ---
 
-# Mapeo MITRE ATT&CK
+## Mapeo MITRE ATT&CK
 
-Este laboratorio proporciona información útil para identificar técnicas asociadas a:
-
-- Execution
-- Discovery
-- Persistence
-- Privilege Escalation
-- Defense Evasion
-
-El mapeo específico será realizado en los laboratorios de **Threat Hunting** y **Detection Engineering**.
+La telemetría obtenida puede apoyar investigaciones relacionadas con **Execution**, **Discovery**, **Persistence**, **Privilege Escalation** y **Defense Evasion**. El mapeo específico se realiza únicamente sobre eventos y comportamientos concretos.
 
 ---
 
-# Aplicación en un SOC
+## Aplicación en un SOC
 
-Este laboratorio desarrolla competencias utilizadas diariamente por un **SOC Analyst**:
+Este laboratorio desarrolla competencias utilizadas por un **SOC Analyst**:
 
-- Validación de telemetría.
-- Verificación de agentes.
-- Monitoreo de eventos.
-- Identificación de anomalías.
-- Confirmación de fuentes de información.
-- Preparación de datos para investigaciones.
-
----
-
-# Lecciones Aprendidas
-
-- La calidad del monitoreo depende de una correcta configuración de Sysmon.
-- La validación de eventos debe realizarse antes de crear reglas de detección.
-- Windows Event Logs y Sysmon proporcionan información complementaria.
-- La telemetría es la base para cualquier investigación de seguridad.
+- validación de telemetría;
+- verificación de agentes;
+- análisis de eventos;
+- correlación entre Windows Event Logs y Sysmon;
+- identificación de anomalías;
+- preparación de evidencia para investigación.
 
 ---
 
-# Referencias
+## Lecciones aprendidas
 
-- Microsoft Learn
-- Sysmon Documentation
-- Wazuh Documentation
-- MITRE ATT&CK
+- Windows Event Logs y Sysmon proporcionan visibilidad complementaria.
+- La configuración de Sysmon determina qué categorías de eventos estarán disponibles.
+- No debe atribuirse a Sysmon un evento que pertenece a Windows Event Logs.
+- La validación de telemetría debe realizarse antes de desarrollar reglas de detección.
+- La relación entre procesos es una fuente importante de contexto para Detection Engineering y Threat Hunting.
+
+---
+
+## Referencias
+
+- Microsoft Learn.
+- Microsoft Sysmon Documentation.
+- Wazuh Documentation.
+- MITRE ATT&CK.
