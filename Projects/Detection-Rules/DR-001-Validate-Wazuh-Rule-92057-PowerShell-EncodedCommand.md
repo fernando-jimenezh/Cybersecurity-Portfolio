@@ -1,173 +1,146 @@
-# DR-001 - Validate Wazuh Rule 92057 - PowerShell EncodedCommand
+# DR-001 — Validate Wazuh Rule 92057 — PowerShell EncodedCommand
 
-## Executive Summary
+## Resumen ejecutivo
 
-This project validates the native **Wazuh Rule 92057**, responsible for detecting PowerShell executions using the **-EncodedCommand** parameter.
+Este proyecto valida la regla nativa **Wazuh Rule 92057**, orientada a detectar ejecuciones de **PowerShell** en las que un proceso `powershell.exe` inicia otro proceso PowerShell utilizando `-EncodedCommand` o abreviaciones compatibles con la lógica de la regla.
 
-The objective was to confirm the complete detection workflow, from Sysmon telemetry generation to Wazuh alert creation, and verify that native detection capabilities already provide coverage for this technique without requiring a custom detection rule.
-
----
-
-# Objective
-
-Validate the native **Rule 92057** by confirming that:
-
-- Sysmon records the process creation event.
-- Wazuh receives the telemetry.
-- The event is processed by the rule engine.
-- Rule **92057** is triggered correctly.
-- No custom detection rule is required.
+La validación forma parte de un escenario compuesto por **tres pruebas controladas**. La primera estableció la telemetría base, la segunda confirmó la detección nativa y la tercera evaluó repetibilidad y contexto mediante Threat Hunting.
 
 ---
 
-# Scenario
+## Relación con las tres pruebas
 
-As part of the laboratory investigation, a controlled PowerShell execution was performed using the **-EncodedCommand** parameter.
+| Prueba | Propósito | Resultado |
+|---|---|---|
+| **Prueba 1 — Telemetría base** | Confirmar Sysmon y Wazuh con PowerShell iniciado desde `cmd.exe` | Evento recibido; no corresponde al evento que activa 92057 |
+| **Prueba 2 — Detection Validation** | Generar la relación `powershell.exe → powershell.exe -EncodedCommand ...` | **Rule 92057 activada correctamente** |
+| **Prueba 3 — Repetibilidad / Hunting** | Repetir búsquedas y correlacionar actividad | 3 eventos con `EncodedCommand`; 1 alerta 92057 |
 
-Command executed:
+Esta separación evita atribuir a una sola ejecución evidencias que pertenecen a pruebas distintas.
+
+---
+
+## Objetivo
+
+Validar la regla nativa **92057** comprobando que:
+
+- Sysmon registre el **Process Create**;
+- Wazuh reciba la telemetría;
+- el evento sea clasificado dentro del grupo `sysmon_event1`;
+- el proceso padre sea `powershell.exe`;
+- la línea de comandos del proceso hijo contenga PowerShell con `-EncodedCommand` o una abreviación admitida;
+- la regla **92057** genere la alerta esperada;
+- no sea necesario duplicar esta detección mediante una regla personalizada.
+
+---
+
+## Escenario
+
+La prueba de detección se diseñó para cumplir explícitamente la relación requerida por la regla:
+
+```text
+powershell.exe
+      │
+      ▼
+powershell.exe -EncodedCommand QQA=
+```
+
+Comando de referencia utilizado dentro del escenario:
 
 ```powershell
 powershell.exe -EncodedCommand QQA=
 ```
 
-Although the supplied Base64 string is intentionally invalid and generates an execution error, the command successfully produces the telemetry required to validate the detection.
+`QQA=` es Base64 válido y, interpretado como UTF-16LE, representa `A`. El objetivo del laboratorio no fue ejecutar una carga maliciosa, sino producir de manera segura la telemetría necesaria para comprobar el comportamiento del SIEM.
 
 ---
 
-# Detection Goal
-
-Validate that Wazuh detects PowerShell executions using the **-EncodedCommand** parameter through its native detection content.
-
----
-
-# Architecture
+## Arquitectura de detección
 
 ```text
 Windows 11
-      │
-      ▼
-Sysmon
-      │
-      ▼
+    │
+    ▼
+Sysmon Event ID 1
+    │
+    ▼
 Wazuh Agent
-      │
-      ▼
-Wazuh Manager
-      │
-      ▼
-Rules Engine
-      │
-      ▼
+    │
+    ▼
+Wazuh Manager / Analysis Engine
+    │
+    ▼
+Group: sysmon_event1
+    │
+    ▼
 Rule 92057
-      │
-      ▼
+    │
+    ▼
 Security Alert
 ```
 
 ---
 
-# Technologies Used
+## Tecnologías utilizadas
 
-- Wazuh 4.14.5
-- Windows 11
-- Sysmon
-- PowerShell
-- Wazuh Dashboard
-
----
-
-# Evidence Analyzed
-
-During the validation, the following event was identified:
-
-| Field | Value |
-|--------|-------|
-| Provider | Microsoft-Windows-Sysmon |
-| Event ID | 1 |
-| Image | powershell.exe |
-| Parent Image | cmd.exe |
-| CommandLine | powershell.exe -EncodedCommand QQA= |
-
-The event was successfully collected by the Wazuh Agent and processed by the Wazuh Rules Engine.
+- Wazuh 4.14.5.
+- Windows 11.
+- Sysmon.
+- PowerShell.
+- Wazuh Dashboard.
 
 ---
 
-# Rule Processing Chain
+## Evidencia validada
 
-The investigation confirmed the processing chain followed by Wazuh before generating the alert.
+La validación se apoyó en tres conjuntos de evidencia:
 
-```text
-Windows Event
-        │
-        ▼
-Rule 18100
-        │
-        ▼
-Rule 184665
-(Sysmon Event 1)
-        │
-        ▼
-Group
-sysmon_event1
-        │
-        ▼
-Rule 92057
-        │
-        ▼
-Alert Generated
-```
+1. **Telemetría base:** una ejecución con `cmd.exe` como proceso padre, utilizada para comprobar la captura del campo `CommandLine`.
+2. **Evento de detección:** una ejecución PowerShell cuyo proceso padre también fue `powershell.exe`, condición necesaria para la regla 92057.
+3. **Búsqueda de contexto:** consultas posteriores que identificaron tres eventos relacionados con `EncodedCommand` y una alerta específica `rule.id:92057`.
 
-This processing sequence demonstrates how Wazuh first classifies Sysmon Process Create events before evaluating detection-specific rules.
+La evidencia de la primera prueba no debe utilizarse como si fuera el evento exacto que activó la regla.
 
 ---
 
-# Rule Definition
+## Definición técnica de la regla
 
-The native detection is implemented in the official Wazuh ruleset.
-
-**Rule File**
-
-```text
-/var/ossec/ruleset/rules/0800-sysmon_id_1.xml
-```
-
-Relevant rule definition:
+En Wazuh 4.14.5 la regla se encuentra en el ruleset oficial para Sysmon Event ID 1 y utiliza la siguiente lógica relevante:
 
 ```xml
-<rule id="92057" level="5">
+<rule id="92057" level="12">
     <if_group>sysmon_event1</if_group>
-    <field name="win.eventdata.parentImage" type="pcre2">(?i)\\powershell\.exe</field>
-    <field name="win.eventdata.commandLine" type="pcre2">(?i)-encodedcommand</field>
-    <description>
-        Powershell.exe spawned a powershell process which executed a base64 encoded command
-    </description>
+    <field name="win.eventdata.parentImage" type="pcre2">(?i)powershell\.exe</field>
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)powershell\.exe.+\-\b(encodedcommand|e|ea|ec|encodeda|encode|en|enco)\b</field>
+    <options>no_full_log</options>
+    <description>Powershell.exe spawned a powershell process which executed a base64 encoded command</description>
     <mitre>
         <id>T1059.001</id>
     </mitre>
 </rule>
 ```
 
-The rule evaluates Sysmon Process Create events and detects PowerShell executions that use the **-EncodedCommand** parameter, a technique commonly associated with command obfuscation and malicious script execution.
+### Condiciones principales
+
+- El evento debe pertenecer a `sysmon_event1`.
+- `parentImage` debe corresponder a `powershell.exe`.
+- `commandLine` debe contener una nueva ejecución de PowerShell con `-EncodedCommand` o una abreviación contemplada por la expresión regular.
 
 ---
 
-# Rule Logic
-
-The detection is evaluated only after the event has been classified as a **Sysmon Process Create (Event ID 1)**.
-
-Detection workflow:
+## Flujo de validación
 
 ```text
 Sysmon Event ID 1
         │
         ▼
-Group sysmon_event1
+Clasificación sysmon_event1
         │
         ▼
-Parent Process = powershell.exe
+Parent Image = powershell.exe
         │
         ▼
-CommandLine contains -EncodedCommand
+CommandLine = powershell.exe ... -EncodedCommand ...
         │
         ▼
 Rule 92057
@@ -176,69 +149,59 @@ Rule 92057
 Alert Generated
 ```
 
-The rule correlates two primary conditions:
+---
 
-- Parent process must be **powershell.exe**.
-- Command line must contain **-EncodedCommand**.
+## Resultado
 
-When both conditions are satisfied, Rule **92057** generates the corresponding alert.
+La prueba confirmó que:
 
-This validation confirms that native Wazuh detection already provides coverage for this technique without requiring a custom detection rule.
+- Sysmon registró el evento requerido.
+- Wazuh procesó la telemetría correctamente.
+- La regla nativa **92057** se activó cuando se cumplieron sus condiciones.
+- La regla tiene nivel **12** en Wazuh 4.14.5.
+- No es necesario crear una regla personalizada para reproducir esta misma lógica.
 
 ---
 
-# Detection Validation
+## Análisis técnico
 
-The investigation confirmed that:
+La validación demuestra un principio importante de **Detection Engineering**: antes de desarrollar contenido personalizado, debe comprobarse si el SIEM ya dispone de una detección nativa adecuada.
 
-- Sysmon successfully recorded Event ID 1.
-- Wazuh collected the telemetry.
-- The Rules Engine processed the event correctly.
-- Native Rule **92057** generated the expected alert.
-- No custom detection rule was required.
+También demuestra por qué la correlación precisa de evidencia es importante. Una búsqueda por `EncodedCommand` puede devolver varias ejecuciones, pero una regla puede activarse solo sobre aquellas que cumplen todas sus condiciones, incluyendo la relación entre proceso padre e hijo.
 
 ---
 
-# Technical Analysis
+## MITRE ATT&CK
 
-Before developing custom detection content, security analysts should always verify whether native SIEM capabilities already provide adequate coverage.
+| Táctica | Técnica |
+|---|---|
+| Execution | **T1059.001 — PowerShell** |
+| Defense Evasion / contexto de ofuscación | **T1027.010 — Command Obfuscation** |
 
-This validation demonstrated that Wazuh includes built-in detection logic for PowerShell executions using **-EncodedCommand**, eliminating the need to duplicate existing functionality.
-
-Understanding the internal processing chain also provides valuable insight into how Sysmon events are classified before reaching detection-specific rules.
-
----
-
-# MITRE ATT&CK
-
-| Tactic | Technique |
-|----------|-----------|
-| Execution | T1059.001 – PowerShell |
+La regla Wazuh 92057 está mapeada directamente a T1059.001. T1027.010 se utiliza aquí únicamente como contexto analítico del uso de contenido codificado u ofuscado.
 
 ---
 
-# Lessons Learned
+## Lecciones aprendidas
 
-- Native SIEM content should always be reviewed before creating custom rules.
-- Sysmon provides high-quality telemetry for process creation events.
-- Understanding the internal rule processing chain simplifies Detection Engineering activities.
-- Rule validation is an essential step before implementing new detections.
-- Understanding the internal rule logic improves detection validation and facilitates future Detection Engineering tasks.
-
----
-
-# Conclusion
-
-The validation confirmed that Wazuh provides native coverage for detecting PowerShell executions using the **-EncodedCommand** parameter.
-
-The laboratory successfully demonstrated the complete detection workflow, from telemetry generation to alert creation, reinforcing knowledge of Sysmon telemetry, Wazuh rule processing and native detection validation.
-
-This project also highlights the importance of understanding existing SIEM capabilities before developing custom detection content.
+- La evidencia de distintas pruebas no debe mezclarse como si correspondiera a una única ejecución.
+- La lógica completa de una regla debe validarse antes de atribuirle una alerta.
+- Sysmon Event ID 1 proporciona telemetría de alta calidad para análisis de procesos.
+- La relación **parent-child process** es determinante en muchas detecciones.
+- La validación de reglas nativas debe preceder al desarrollo de detecciones personalizadas.
 
 ---
 
-# Related Projects
+## Conclusión
 
-- WI-001 – PowerShell EncodedCommand
-- TH-001 – PowerShell EncodedCommand
-- CS-001 – Investigation of PowerShell EncodedCommand
+La validación confirmó que **Wazuh 4.14.5 Rule 92057** proporciona cobertura nativa para el escenario específico en que PowerShell inicia otro proceso PowerShell utilizando `-EncodedCommand` o una variante contemplada por la regla.
+
+El escenario completo queda documentado de forma coherente mediante tres pruebas: telemetría base, Detection Validation y Threat Hunting. De esta forma, cada evidencia conserva su contexto y puede relacionarse correctamente con las demás.
+
+---
+
+## Proyectos relacionados
+
+- **WI-001** — PowerShell EncodedCommand.
+- **TH-001** — Threat Hunting: PowerShell EncodedCommand.
+- **CS-001** — PowerShell EncodedCommand Investigation.
