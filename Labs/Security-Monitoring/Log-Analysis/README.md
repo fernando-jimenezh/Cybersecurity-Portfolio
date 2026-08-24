@@ -1,177 +1,166 @@
-# Security Monitoring - Log Analysis
+# Security Monitoring — Log Analysis
 
 ## Objetivo
 
-Analizar los eventos de seguridad recopilados por **Wazuh SIEM** para identificar comportamientos normales y actividades potencialmente sospechosas, comprendiendo el flujo de la información desde su generación hasta su visualización en el **Dashboard**.
+Analizar los eventos de seguridad recopilados por **Wazuh SIEM** para identificar comportamientos esperados y actividades potencialmente sospechosas, comprendiendo el flujo de la información desde su generación hasta su consulta en **Wazuh Dashboard**.
 
 ---
 
-# Alcance
+## Alcance
 
-Este laboratorio contempla el análisis inicial de eventos provenientes de los sistemas Windows y Linux integrados al laboratorio.
+Este laboratorio contempla el análisis inicial de eventos provenientes de sistemas Windows y Linux integrados al entorno de monitoreo.
 
 Incluye:
 
-- Exploración de eventos.
-- Identificación de fuentes de logs.
-- Análisis de alertas.
-- Clasificación de eventos.
-- Priorización de alertas.
-- Validación de información registrada.
+- exploración de eventos;
+- identificación de fuentes de logs;
+- análisis de alertas;
+- clasificación y priorización;
+- validación de información registrada;
+- correlación básica entre fuentes.
 
-No contempla investigaciones avanzadas ni actividades de Threat Hunting.
+No contempla investigaciones avanzadas ni Threat Hunting profundo, que se documentan en secciones específicas.
 
 ---
 
-# Arquitectura
+## Arquitectura
 
+Cada endpoint utiliza su propio Wazuh Agent. Los agentes convergen en Wazuh Manager y no en un agente compartido.
+
+```text
+Windows 11                         Ubuntu
+    │                                 │
+Windows Event Logs / Sysmon      auditd / Syslog / systemd journal
+    │                                 │
+    ▼                                 ▼
+Wazuh Agent                       Wazuh Agent
+    │                                 │
+    └───────────────┬─────────────────┘
+                    ▼
+              Wazuh Manager
+                    │
+                    ▼
+              Wazuh Indexer
+                    │
+                    ▼
+              Wazuh Dashboard
+                    │
+                    ▼
+                Log Analysis
 ```
-Windows 11           Ubuntu
-     │                  │
-     ▼                  ▼
- Windows Logs      auditd / Syslog
-          │
-          ▼
-      Wazuh Agent
-          │
-          ▼
-     Wazuh Manager
-          │
-          ▼
-     Wazuh Indexer
-          │
-          ▼
-    Wazuh Dashboard
-```
 
 ---
 
-# Tecnologías Utilizadas
+## Tecnologías utilizadas
 
-## SIEM
-
-- Wazuh
-
-## Sistemas Operativos
-
-- Windows 11
-- Ubuntu
-
-## Herramientas
-
-- Wazuh Dashboard
-- Wazuh Manager
-- Wazuh Indexer
+- Wazuh Manager.
+- Wazuh Indexer.
+- Wazuh Dashboard.
+- Windows 11.
+- Ubuntu.
+- Sysmon.
+- Windows Event Logs.
+- auditd.
+- Syslog.
+- systemd journal.
 
 ---
 
-# Requisitos
+## Requisitos
 
 Antes de iniciar este laboratorio se verificó:
 
-- Agentes conectados.
-- Recepción de telemetría.
-- Dashboard operativo.
-- Indexación de eventos.
-- Comunicación entre todos los componentes.
+- agentes conectados;
+- recepción de telemetría;
+- Dashboard operativo;
+- indexación de eventos;
+- sincronización horaria;
+- comunicación entre componentes.
 
 ---
 
-# Implementación
+## Implementación
 
-Durante este laboratorio se realizaron las siguientes actividades:
+Durante el laboratorio se realizaron las siguientes actividades:
 
-1. Acceso al Dashboard.
-2. Revisión de alertas generadas.
-3. Exploración de eventos.
-4. Identificación de la fuente del evento.
-5. Validación del agente que originó el evento.
-6. Análisis de la información registrada.
-
----
-
-# Configuración
-
-Se utilizaron las vistas predeterminadas de Wazuh para consultar:
-
-- Security Events
-- Agent Events
-- Authentication Events
-- Sysmon Events
-- Linux Events
-
-No fue necesaria la creación de reglas personalizadas.
+1. Acceso a Wazuh Dashboard.
+2. Revisión de eventos y alertas disponibles.
+3. Identificación de la fuente de cada evento.
+4. Validación del agente y endpoint de origen.
+5. Revisión de timestamps, severidad y campos técnicos.
+6. Correlación básica con eventos relacionados.
+7. Clasificación inicial de la actividad observada.
 
 ---
 
-# Validación
+## Análisis
+
+Las vistas y búsquedas disponibles en Wazuh se utilizaron para revisar información de seguridad proveniente de Windows y Linux.
+
+El análisis diferencia entre:
+
+- **evento:** registro generado por una fuente de telemetría;
+- **alerta:** resultado producido cuando el Analysis Engine de Wazuh aplica una regla y se cumplen sus condiciones;
+- **hallazgo:** conclusión obtenida después de analizar evidencia y contexto.
+
+Esta separación evita interpretar automáticamente cada evento como una amenaza.
+
+---
+
+## Validación
 
 Se verificó:
 
-- Recepción de eventos Windows.
-- Recepción de eventos Linux.
-- Correcta indexación.
-- Visualización desde el Dashboard.
-- Integridad de los datos recibidos.
+- recepción de eventos Windows;
+- recepción de eventos Linux;
+- correcta indexación;
+- visualización desde el Dashboard;
+- asociación con el endpoint correspondiente;
+- consistencia de datos y timestamps.
 
 ---
 
-# Evidencias
+## Evidencias
 
-Durante este laboratorio se documentan:
+Durante este laboratorio se documentan, cuando corresponde:
 
-- Alertas generadas.
-- Eventos recibidos.
-- Información del agente.
-- Nivel de severidad.
-- Fecha y hora del evento.
-- Fuente del log.
-
-Las capturas y ejemplos serán incorporados posteriormente.
-
----
-
-# Detecciones Implementadas
-
-En esta etapa únicamente se realizó el análisis de eventos generados por la configuración predeterminada de Wazuh.
-
-No se implementaron reglas de detección personalizadas.
+- eventos recibidos;
+- alertas generadas;
+- información del agente;
+- nivel de severidad;
+- fecha y hora;
+- fuente del log;
+- campos utilizados para contextualizar la actividad.
 
 ---
 
-# Mapeo MITRE ATT&CK
+## Detecciones implementadas
 
-Los eventos analizados permiten identificar actividades relacionadas con tácticas como:
-
-- Initial Access
-- Execution
-- Persistence
-- Discovery
-- Credential Access
-- Defense Evasion
-
-El mapeo detallado será desarrollado en los laboratorios de **Threat Hunting**.
+En esta etapa se analizó principalmente el contenido disponible mediante la configuración y reglas existentes de Wazuh. El desarrollo y validación específica de reglas se documenta en **Detection Engineering**.
 
 ---
 
-# Aplicación en un Entorno Empresarial
+## Mapeo MITRE ATT&CK
 
-El análisis de logs constituye una de las actividades principales de un **SOC Analyst**.
-
-Las tareas realizadas en este laboratorio representan actividades habituales como:
-
-- Revisión de alertas.
-- Validación de eventos.
-- Correlación de información.
-- Identificación de comportamientos anómalos.
-- Priorización de incidentes.
-- Verificación de la calidad de la telemetría.
+MITRE ATT&CK se utiliza únicamente cuando un evento, alerta o comportamiento concreto permite establecer una relación técnica justificable. La presencia de un evento por sí sola no implica que una técnica ATT&CK haya sido ejecutada de forma maliciosa.
 
 ---
 
-# Competencias Desarrolladas
+## Aplicación en un entorno empresarial
 
-Al finalizar este laboratorio se fortalecieron las siguientes competencias:
+El análisis de logs constituye una actividad habitual de un **SOC Analyst** e incluye:
+
+- revisión y contextualización de alertas;
+- validación de eventos;
+- correlación de información;
+- identificación de comportamientos anómalos;
+- priorización;
+- verificación de calidad de telemetría;
+- documentación basada en evidencia.
+
+---
+
+## Competencias desarrolladas
 
 - Análisis de eventos de seguridad.
 - Interpretación de alertas.
@@ -183,18 +172,19 @@ Al finalizar este laboratorio se fortalecieron las siguientes competencias:
 
 ---
 
-# Lecciones Aprendidas
+## Lecciones aprendidas
 
-- La calidad del análisis depende directamente de la calidad de la telemetría.
-- La correcta interpretación de los eventos permite identificar comportamientos anómalos con mayor rapidez.
-- La correlación de múltiples fuentes de información mejora el contexto de una investigación.
-- La revisión periódica de alertas es una actividad fundamental dentro de un SOC.
+- Evento, alerta y hallazgo no son conceptos equivalentes.
+- Cada endpoint mantiene su propio Wazuh Agent.
+- La calidad del análisis depende de la calidad y contexto de la telemetría.
+- La correlación entre múltiples fuentes mejora la investigación.
+- Las conclusiones deben derivarse de evidencia y no únicamente de la severidad de una alerta.
 
 ---
 
-# Referencias
+## Referencias
 
-- Wazuh Documentation
-- MITRE ATT&CK
-- Microsoft Learn
-- Ubuntu Documentation
+- Wazuh Documentation.
+- MITRE ATT&CK.
+- Microsoft Learn.
+- Ubuntu Documentation.
