@@ -22,7 +22,7 @@
 
 Este repositorio documenta actividades realizadas en un laboratorio propio orientado a **ciberseguridad defensiva**. El objetivo es demostrar capacidades prácticas, reproducibles y trazables, no únicamente conocimiento teórico o uso aislado de herramientas.
 
-El trabajo incluye construcción de infraestructura de monitoreo, generación de telemetría, análisis SOC, validación de detecciones, Threat Hunting, Network Security Monitoring, discovery controlado de activos y servicios, evaluación inicial de vulnerabilidades y automatización asistida por IA.
+El trabajo incluye construcción de infraestructura de monitoreo, generación y validación de telemetría, análisis SOC, Detection Validation, Threat Hunting, Network Security Monitoring, discovery controlado de activos y servicios, evaluación inicial de vulnerabilidades y automatización asistida por IA.
 
 ```text
 Entorno controlado / scope autorizado
@@ -38,9 +38,11 @@ Detection / Threat Hunting
 Evidencia y conclusiones
 ```
 
+---
+
 ## Metodología de aprendizaje e implementación
 
-Las implementaciones y pruebas documentadas se realizan combinando:
+Las implementaciones y pruebas documentadas combinan:
 
 - documentación técnica oficial de fabricantes y proyectos;
 - manuales y referencias técnicas;
@@ -52,19 +54,27 @@ La **IA se utiliza como herramienta de asistencia**, no como sustituto de la val
 
 > La documentación pública describe capacidades y arquitectura sin exponer credenciales, endpoints internos, topologías privadas, información de clientes ni otros detalles operativos sensibles.
 
-## Featured Projects
+---
+
+## Proyectos destacados
 
 ### AI-001 — Private AI Security Orchestration Lab
 
 Diseño e implementación de una arquitectura privada de IA orientada a automatización y operaciones técnicas de seguridad.
 
-**Demuestra:** Local LLM · Ollama · Web UI · REST API · Agent Architecture · Tool Orchestration · Linux · Security Controls · Deterministic Parsing
+**Demuestra:** Local LLM · Ollama · Web Interface · REST API · Agent Architecture · Tool Orchestration · Linux Runner · Security Controls · Deterministic Parsing
 
 **[Ver AI-001 →](Projects/AI-Security-Automation/AI-001-Private-AI-Security-Orchestration.md)**
 
 ### CS-001 — PowerShell EncodedCommand Investigation
 
-Investigación completa de una ejecución PowerShell con `-EncodedCommand`.
+Investigación completa de un escenario `-EncodedCommand` compuesto por **tres pruebas controladas**:
+
+1. validación de telemetría base;
+2. Detection Validation de Wazuh Rule 92057;
+3. Threat Hunting y repetibilidad.
+
+La documentación diferencia correctamente los eventos observados de la alerta generada: se identificaron **3 eventos relacionados con `EncodedCommand` y 1 alerta Rule 92057**, porque la regla requiere condiciones adicionales, incluida la relación `powershell.exe → powershell.exe`.
 
 **Demuestra:** Windows Event Analysis · Sysmon · Wazuh SIEM · Detection Validation · Threat Hunting · MITRE ATT&CK
 
@@ -72,13 +82,13 @@ Investigación completa de una ejecución PowerShell con `-EncodedCommand`.
 
 ### CS-002 — Suspicious Command Prompt Investigation
 
-Caso de análisis de ejecución de `cmd.exe`, telemetría relacionada y evaluación desde la perspectiva de un analista SOC.
+Caso de análisis de ejecución de `cmd.exe` iniciada desde PowerShell, validando la relación parent-child process y la regla nativa Wazuh 92004.
 
 **[Ver CS-002 →](Projects/Case-Studies/CS-002-Suspicious-Command-Prompt-Investigation.md)**
 
 ### CS-003 — Windows Discovery Investigation
 
-Investigación centrada en comandos de discovery y enumeración en Windows, correlacionando comportamiento, telemetría y contexto defensivo.
+Investigación centrada en `whoami.exe`, Discovery y validación de cobertura del ruleset, complementada con una regla personalizada cuando la cobertura nativa no era suficiente para ese escenario.
 
 **[Ver CS-003 →](Projects/Case-Studies/CS-003-Windows-Discovery-Investigation.md)**
 
@@ -90,7 +100,7 @@ Investigación centrada en comandos de discovery y enumeración en Windows, corr
 |---|---|
 | **Security Monitoring** | Windows/Linux telemetry, log analysis, Wazuh SIEM |
 | **Windows Investigation** | PowerShell, cmd, whoami, Sysmon Process Create |
-| **Detection Engineering** | Validación de reglas Wazuh, lógica de detección, MITRE ATT&CK |
+| **Detection Engineering** | Validación de reglas Wazuh, lógica de detección, reglas personalizadas, MITRE ATT&CK |
 | **Threat Hunting** | EncodedCommand, LOLBins, Windows Discovery |
 | **Incident Investigation** | Timeline, evidence correlation, risk assessment, recommendations |
 | **SIEM Administration** | Wazuh deployment, agents, telemetry, ruleset analysis |
@@ -100,6 +110,8 @@ Investigación centrada en comandos de discovery y enumeración en Windows, corr
 | **Security Assessment Environment** | Kali Linux, isolated lab networks, controlled execution |
 | **Security Automation** | APIs, agents, tool execution, structured outputs y controles de ejecución |
 | **Applied AI** | Local LLM deployment, orchestration, deterministic parsing y AI-assisted technical workflows |
+
+---
 
 ## Laboratorios destacados
 
@@ -119,9 +131,11 @@ Investigación centrada en comandos de discovery y enumeración en Windows, corr
 - [Asset & Service Discovery — Controlled Security Assessment](Labs/Security-Assessment/Asset-Service-Discovery/README.md)
 - [Vulnerability Assessment — Controlled Security Validation](Labs/Security-Assessment/Vulnerability-Assessment/README.md)
 
+---
+
 ## Investigaciones y proyectos
 
-La sección `Projects` concentra investigaciones y proyectos donde las capacidades construidas en los laboratorios se aplican a actividades concretas de ciberseguridad.
+La sección `Projects` concentra investigaciones donde las capacidades construidas en los laboratorios se aplican a actividades concretas de ciberseguridad.
 
 ```text
 Projects/
@@ -129,11 +143,13 @@ Projects/
 ├── Case-Studies/               ← investigaciones integrales
 ├── Windows-Investigations/     ← análisis de eventos y procesos
 ├── Linux-Investigations/       ← investigaciones Linux
-├── Detection-Rules/            ← validación de detecciones
+├── Detection-Rules/            ← validación y desarrollo de detecciones
 └── Threat-Hunting-Reports/     ← hunting y correlación
 ```
 
 **[Explorar todos los proyectos →](Projects/README.md)**
+
+---
 
 ## Arquitectura general del laboratorio
 
@@ -146,25 +162,53 @@ Kali Linux / actividad controlada
           │                 Vulnerability Assessment
           │
           ▼
-Windows 11 / Ubuntu ──► Sysmon / auditd / logs
-          │                         │
-          │                         ▼
-          └──────────────► Wazuh SIEM
-                                    │
-Network traffic ──► Suricata IDS ───┤
-                                    ▼
-                              SOC Analysis
-                                    │
-                    Detection / Hunting / IR
+Windows 11 / Ubuntu
+          │
+          ├── Windows Event Logs / Sysmon
+          └── auditd / Syslog / systemd journal
+          │
+          ▼
+      Wazuh Agents
+          │
+          ▼
+      Wazuh Manager
+          │
+          ▼
+      Wazuh Indexer
+          │
+          ▼
+      Wazuh Dashboard
+          │
+          ▼
+SOC Analysis / Detection / Threat Hunting / IR
+
+Network traffic
+      │
+      ▼
+Suricata IDS
+      │
+      ▼
+eve.json / alerts
+      │
+      └──► Network Security Monitoring
+           └──► integración SIEM como evolución del laboratorio
 ```
 
-Componentes utilizados:
+> La relación Suricata → SIEM se mantiene documentada como **integración prevista/conceptual** mientras no exista evidencia publicada de ingestión real de `eve.json` en Wazuh.
+
+---
+
+## Componentes utilizados
 
 - Wazuh SIEM.
 - Windows 11.
 - Ubuntu Server.
 - Kali Linux.
 - Sysmon.
+- Windows Event Logs.
+- auditd.
+- Syslog.
+- systemd journal / `journalctl`.
 - Suricata.
 - Nmap.
 - VirtualBox.
@@ -173,9 +217,13 @@ Componentes utilizados:
 - Open WebUI.
 - REST APIs y agentes de automatización.
 
+---
+
 ## Tecnologías
 
 `Wazuh` · `Sysmon` · `Suricata` · `Nmap` · `Kali Linux` · `Sigma` · `MITRE ATT&CK` · `Windows` · `Linux` · `PowerShell` · `Bash` · `Ollama` · `Open WebUI` · `Local LLM` · `REST API` · `Git` · `GitHub`
+
+---
 
 ## Principios de documentación
 
@@ -185,7 +233,7 @@ Todo trabajo publicado debe cumplir, cuando corresponda, con:
 - entorno controlado o scope autorizado;
 - evidencia observada;
 - análisis técnico;
-- separación entre evidencia e hipótesis;
+- separación entre evento, alerta, evidencia e hipótesis;
 - validación de resultados;
 - conclusiones y recomendaciones;
 - protección de información sensible;
@@ -208,9 +256,13 @@ Para automatización e IA se añaden:
 - resultados estructurados;
 - validación técnica independiente de la salida del modelo.
 
+---
+
 ## Estructura escalable
 
-Los nuevos escenarios se incorporan únicamente cuando existe trabajo práctico y evidencia que los respalde. El portafolio prioriza calidad y trazabilidad sobre cantidad de documentos.
+Los nuevos escenarios se incorporan únicamente cuando existe trabajo práctico y evidencia que los respalde. El portafolio prioriza calidad, trazabilidad y consistencia técnica sobre cantidad de documentos.
+
+---
 
 ## Knowledge Base
 
