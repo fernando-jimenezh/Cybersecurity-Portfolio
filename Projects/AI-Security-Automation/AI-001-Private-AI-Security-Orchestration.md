@@ -4,13 +4,13 @@
 
 Este proyecto documenta el diseño e implementación inicial de una arquitectura privada de IA orientada a **automatización técnica y operaciones de seguridad** dentro de un laboratorio controlado.
 
-El objetivo fue integrar un **LLM local** con una capa de agente/API capaz de interpretar solicitudes en lenguaje natural y transformarlas en acciones técnicas autorizadas, manteniendo una separación estricta entre **razonamiento** y **ejecución**.
+El objetivo fue integrar un **LLM local** con una capa de **Agent/API** capaz de interpretar solicitudes en lenguaje natural y transformarlas en acciones técnicas autorizadas, manteniendo una separación estricta entre **razonamiento** y **ejecución**.
 
-La implementación fue diseñada bajo un principio central:
+La implementación sigue un principio central:
 
 > El modelo puede interpretar y solicitar acciones, pero no dispone de acceso irrestricto al sistema operativo ni ejecuta comandos arbitrarios directamente.
 
-La documentación pública ha sido sanitizada para demostrar las capacidades técnicas sin revelar información operativa sensible del entorno donde se desarrolló la práctica.
+La documentación pública está sanitizada para demostrar las capacidades técnicas sin revelar información operativa sensible del entorno.
 
 ---
 
@@ -21,28 +21,28 @@ Diseñar y validar un flujo donde una solicitud en lenguaje natural pueda:
 1. ser interpretada por un modelo de IA local;
 2. convertirse en una intención técnica;
 3. pasar por controles de autorización y validación;
-4. ejecutar una herramienta previamente permitida;
-5. obtener un resultado real desde un runner Linux;
-6. procesar la salida mediante un parser determinístico;
+4. ejecutar una herramienta previamente autorizada;
+5. obtener un resultado real desde un **Linux runner**;
+6. procesar la salida mediante un **deterministic parser**;
 7. devolver un resultado estructurado para su posterior interpretación por IA.
 
 ---
 
 ## Alcance
 
-El proyecto cubre:
+El proyecto incluye:
 
 - despliegue de un LLM local;
-- interfaz Web para interacción;
+- interfaz web para interacción;
 - integración mediante API;
 - diseño de un agente de orquestación;
-- separación entre reasoning y execution;
+- separación entre **reasoning** y **execution**;
 - control de herramientas autorizadas;
 - validación de parámetros;
 - ejecución técnica sobre Linux;
 - timeouts y auditoría;
-- parsing determinístico;
-- respuesta estructurada;
+- deterministic parsing;
+- resultados estructurados;
 - validación end-to-end de una operación técnica real.
 
 No forma parte del alcance público documentar credenciales, direccionamiento interno, topología real, endpoints privados, nombres de sistemas internos ni configuraciones sensibles.
@@ -120,7 +120,7 @@ El runtime permite cargar y consumir modelos mediante una API local, manteniendo
 
 ### Web Interface
 
-Se integró una interfaz Web para facilitar la interacción con el modelo y validar el flujo conversacional.
+Se integró una interfaz web para facilitar la interacción con el modelo y validar el flujo conversacional.
 
 Tecnología utilizada:
 
@@ -135,7 +135,7 @@ Se implementó una capa intermedia responsable de:
 - interpretar solicitudes;
 - identificar la tool solicitada;
 - validar argumentos;
-- comprobar que la operación esté permitida;
+- comprobar que la operación esté autorizada;
 - controlar el flujo de ejecución;
 - registrar resultados;
 - entregar datos estructurados al modelo.
@@ -146,9 +146,9 @@ Esta separación evita que el LLM tenga control directo sobre el runner.
 
 La ejecución real se realiza en un sistema Linux separado de la capa de IA.
 
-El runner tiene la responsabilidad de ejecutar únicamente herramientas previamente autorizadas dentro del alcance del laboratorio.
+El runner tiene la responsabilidad de ejecutar únicamente herramientas previamente autorizadas dentro del alcance definido para el laboratorio.
 
-Este diseño permite separar:
+Este diseño separa:
 
 ```text
 Reasoning Plane
@@ -162,7 +162,7 @@ Execution Plane
 
 ### Deterministic Parser
 
-La salida de las herramientas no se entrega directamente al LLM como única fuente de verdad.
+La salida de las herramientas no se utiliza directamente como única fuente de verdad para el LLM.
 
 Primero se procesa mediante parsers determinísticos para obtener campos estructurados como:
 
@@ -173,7 +173,7 @@ Primero se procesa mediante parsers determinísticos para obtener campos estruct
 - timestamps;
 - información normalizada.
 
-Esto reduce el riesgo de que el modelo interprete incorrectamente una salida técnica ambigua.
+Esto reduce el riesgo de interpretación incorrecta de una salida técnica ambigua.
 
 ---
 
@@ -181,15 +181,15 @@ Esto reduce el riesgo de que el modelo interprete incorrectamente una salida té
 
 ### Tool Allowlist
 
-Solo pueden ejecutarse funciones previamente definidas.
+Solo pueden ejecutarse funciones previamente definidas y autorizadas.
 
-El modelo no puede crear libremente nuevos comandos del sistema operativo.
+El modelo no puede generar y ejecutar libremente comandos arbitrarios del sistema operativo.
 
 ### Parameter Validation
 
 Los parámetros son validados antes de ser enviados al runner.
 
-El objetivo es impedir que una entrada conversacional se transforme directamente en una instrucción de shell arbitraria.
+El objetivo es impedir que una entrada conversacional se convierta directamente en una instrucción de shell arbitraria.
 
 ### Scope Control
 
@@ -201,7 +201,7 @@ Las ejecuciones técnicas utilizan límites temporales para evitar procesos bloq
 
 ### Auditing
 
-El flujo está diseñado para registrar al menos:
+El flujo registra, como mínimo:
 
 - acción solicitada;
 - tool utilizada;
@@ -234,13 +234,13 @@ Solicitud en lenguaje natural
         ↓
 Interpretación de intención
         ↓
-Tool permitida
+Tool autorizada
         ↓
 Validación de parámetros
         ↓
 Ejecución real en Linux
         ↓
-Resultado de conectividad
+Resultado técnico
         ↓
 Parser determinístico
         ↓
@@ -251,7 +251,7 @@ Interpretación asistida por IA
 
 La prueba confirmó que la arquitectura podía completar el ciclo desde la solicitud hasta la ejecución real sin otorgar al modelo un shell arbitrario.
 
-No se publican el activo utilizado, direccionamiento, hostname ni otros identificadores del entorno.
+No se publican el activo utilizado, direccionamiento, hostname ni otros identificadores internos.
 
 ---
 
@@ -293,15 +293,13 @@ La misma arquitectura puede evolucionar para soportar, bajo autorización y dent
 - control validation;
 - security knowledge retrieval.
 
-Cada nueva capacidad debe implementarse como una tool explícita, con validación, timeout, auditoría y parser propios.
+Cada nueva capacidad debe implementarse como una **tool explícita**, con su propia validación, timeout, auditoría y parser.
 
 ---
 
 ## Consideraciones de privacidad
 
-Este proyecto fue diseñado considerando que los entornos de ciberseguridad pueden contener información sensible.
-
-Por esa razón, la documentación pública no expone:
+La documentación pública no expone:
 
 - organizaciones involucradas;
 - datos de clientes;
@@ -352,4 +350,4 @@ El laboratorio permitió validar una arquitectura de **IA privada aplicada a ope
 
 La principal conclusión es que un LLM puede utilizarse como capa de interpretación y orquestación sin convertirlo en un operador con acceso irrestricto al sistema.
 
-El diseño combina conocimientos de **ciberseguridad, Linux, APIs, automatización, arquitectura de agentes e integración de IA**, proporcionando una base escalable para futuros casos de AI-assisted Security Operations.
+El diseño combina conocimientos de **ciberseguridad, Linux, APIs, automatización, arquitectura de agentes e integración de IA**, proporcionando una base escalable para futuros casos de **AI-assisted Security Operations**.
