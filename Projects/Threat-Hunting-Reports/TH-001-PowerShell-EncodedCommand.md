@@ -1,229 +1,224 @@
-# TH-001 - Threat Hunting: PowerShell EncodedCommand
+# TH-001 — Threat Hunting: PowerShell EncodedCommand
 
-## Executive Summary
+## Resumen ejecutivo
 
-Durante las actividades de Threat Hunting se investigó la ejecución de **PowerShell** utilizando el parámetro **-EncodedCommand**, una técnica frecuentemente utilizada para ocultar comandos mediante codificación Base64.
+Durante las actividades de **Threat Hunting** se investigaron ejecuciones de **PowerShell** que utilizaron el parámetro `-EncodedCommand` dentro de un laboratorio controlado.
 
-El objetivo fue determinar si la alerta observada correspondía a una actividad aislada o formaba parte de una secuencia más amplia de actividad maliciosa dentro del entorno monitoreado.
+El objetivo fue determinar si la actividad observada correspondía únicamente a pruebas aisladas o si existían eventos relacionados que justificaran ampliar la investigación.
 
-La investigación confirmó que la actividad estuvo limitada al laboratorio y no se identificaron indicadores adicionales de compromiso.
-
----
-
-# Objective
-
-Validate whether the execution of PowerShell using the `-EncodedCommand` parameter corresponds to an isolated event or represents a broader malicious activity within the monitored environment.
+La búsqueda identificó **3 eventos asociados a `EncodedCommand`**, mientras que solo **1 de ellos activó la regla nativa Wazuh 92057**. Esta diferencia es coherente con la lógica de la regla: no basta con que aparezca `-EncodedCommand`; también debe cumplirse la relación de proceso padre e hijo requerida por la detección.
 
 ---
 
-# Hunting Hypothesis
+## Relación con las tres pruebas realizadas
 
-PowerShell executed with the `-EncodedCommand` parameter is frequently associated with defense evasion, payload obfuscation and malicious script execution.
-
-Hypothesis:
-
-> If an attacker executed an encoded PowerShell command, additional executions or related indicators should also exist within the environment.
+| Prueba | Objetivo | Resultado |
+|---|---|---|
+| **Prueba 1 — Telemetría base** | Validar Sysmon/Wazuh con PowerShell iniciado desde `cmd.exe` | Evento registrado; no cumple `parentImage = powershell.exe` |
+| **Prueba 2 — Detection Validation** | Generar una relación `powershell.exe → powershell.exe -EncodedCommand ...` | **Rule 92057** activada |
+| **Prueba 3 — Threat Hunting / repetibilidad** | Buscar todas las ejecuciones relacionadas | 3 eventos `EncodedCommand`; 1 alerta 92057 |
 
 ---
 
-# Environment
+## Objetivo
 
-| Component | Value |
-|-----------|-------|
-| Operating System | Windows 11 |
+Determinar si las ejecuciones de PowerShell con `-EncodedCommand`:
+
+- estaban limitadas al endpoint de laboratorio;
+- correspondían a pruebas controladas;
+- generaban actividad adicional relevante;
+- producían detecciones nativas consistentes con la lógica del ruleset;
+- presentaban señales de persistencia, movimiento lateral u otra actividad no esperada.
+
+---
+
+## Hipótesis de investigación
+
+El uso de `-EncodedCommand` puede observarse tanto en automatización legítima como en actividades ofensivas. La codificación Base64 no es cifrado, pero puede utilizarse para **command obfuscation**.
+
+**Hipótesis:**
+
+> Si una ejecución codificada correspondiera a una actividad maliciosa más amplia, deberían existir otros eventos relacionados en procesos, usuarios, endpoints, conexiones o mecanismos de persistencia.
+
+---
+
+## Entorno
+
+| Componente | Valor |
+|---|---|
+| Sistema operativo | Windows 11 |
 | SIEM | Wazuh 4.14.5 |
-| Telemetry | Sysmon |
-| Hypervisor | VirtualBox |
+| Telemetría | Sysmon |
+| Hipervisor | VirtualBox |
 
 ---
 
-# Investigation Methodology
+## Metodología
 
-The investigation expanded from the original alert to determine:
+La investigación amplió el análisis desde la evidencia inicial para revisar:
 
-- Number of EncodedCommand executions.
-- Total PowerShell activity.
-- Detection rules triggered.
-- Affected endpoints.
-- Users involved.
-- Related process activity.
+- número de ejecuciones con `EncodedCommand`;
+- actividad total de PowerShell;
+- reglas de detección activadas;
+- endpoints afectados;
+- usuarios involucrados;
+- procesos padre e hijos;
+- actividad posterior relacionada.
 
 ---
 
-# Hunting Queries
+## Hunting Queries
 
-## Encoded PowerShell Executions
+### Ejecuciones con EncodedCommand
 
 ```kql
 data.win.eventdata.commandLine:*EncodedCommand*
 ```
 
-**Result**
+**Resultado:**
 
-- 3 events identified.
+- **3 eventos identificados.**
 
----
-
-## All PowerShell Executions
+### Actividad total de PowerShell
 
 ```kql
 data.win.eventdata.image:*powershell.exe*
 ```
 
-**Result**
+**Resultado:**
 
-- 10 PowerShell executions observed.
+- **10 ejecuciones de PowerShell observadas.**
 
----
-
-## Detection Rule
+### Regla de detección
 
 ```kql
 rule.id:92057
 ```
 
-**Result**
+**Resultado:**
 
-- 1 alert generated.
+- **1 alerta generada.**
 
----
-
-## Affected Endpoint
+### Endpoint
 
 ```kql
 agent.name:W11-Lab
 ```
 
-**Result**
+**Resultado:**
 
-- Activity limited to the laboratory endpoint.
+- Actividad limitada al endpoint del laboratorio.
 
----
-
-## User
+### Usuario
 
 ```kql
 data.win.eventdata.user:*
 ```
 
-**Result**
+Usuario principal observado:
 
-Primary observed user:
-
-```
+```text
 DESKTOP-7CLFI8R\lab
 ```
 
 ---
 
-# Findings
+## Hallazgos
 
-The investigation determined:
+La investigación determinó que:
 
-- Three PowerShell executions contained the **-EncodedCommand** parameter.
-- Only one execution generated the detection rule.
-- No additional hosts were affected.
-- No evidence of lateral movement was identified.
-- No persistence mechanisms were observed.
-- The activity remained isolated within the laboratory environment.
+- se observaron tres eventos con `EncodedCommand`;
+- las tres ejecuciones no eran idénticas desde el punto de vista de la relación **parent-child process**;
+- una de las pruebas registró `cmd.exe` como proceso padre;
+- la ejecución que cumplió la lógica `powershell.exe → powershell.exe -EncodedCommand ...` activó la regla **92057**;
+- no se identificaron otros endpoints afectados;
+- no se observó evidencia de movimiento lateral;
+- no se identificaron mecanismos de persistencia asociados;
+- la actividad permaneció dentro del entorno controlado.
 
 ---
 
-# Indicators Reviewed
+## Indicadores revisados
 
-## Process
+### Proceso
 
-```
+```text
 powershell.exe
 ```
 
-## Command Line
+### Línea de comandos de referencia
 
-```
+```text
 powershell.exe -EncodedCommand QQA=
 ```
 
-## Parent Process
+### Relaciones de proceso observadas durante las pruebas
 
-```
+```text
+Prueba de telemetría base:
 cmd.exe
+  ↓
+powershell.exe -EncodedCommand ...
+
+Prueba de Detection Validation:
+powershell.exe
+  ↓
+powershell.exe -EncodedCommand ...
 ```
 
-## User
-
-```
-DESKTOP-7CLFI8R\lab
-```
-
-## Endpoint
-
-```
-W11-Lab
-```
+La segunda relación es la que satisface la condición de la regla Wazuh 92057.
 
 ---
 
-# Threat Hunting Assessment
+## Evaluación de Threat Hunting
 
-The investigation did not identify evidence suggesting an active compromise.
+No se identificó evidencia que indicara un compromiso activo dentro del alcance y período revisados.
 
-The encoded PowerShell execution corresponded to a controlled laboratory simulation used to validate detection capabilities.
-
-Although the use of **-EncodedCommand** is frequently associated with malicious activity, the available evidence indicated that the execution was expected and limited to the laboratory environment.
-
-No additional suspicious PowerShell activity was identified during the investigation period.
+Las ejecuciones correspondieron a pruebas controladas orientadas a validar telemetría, Detection Engineering y capacidad de investigación. La existencia de tres eventos y una sola alerta no constituye una contradicción: refleja que la regla 92057 evalúa condiciones adicionales además de la presencia de `-EncodedCommand`.
 
 ---
 
-# MITRE ATT&CK
+## MITRE ATT&CK
 
-| Tactic | Technique |
-|----------|-----------|
-| Execution | T1059.001 – PowerShell |
-| Defense Evasion | T1027 – Obfuscated Files or Information |
-
----
-
-# Recommendations
-
-- Continue monitoring PowerShell executions using **-EncodedCommand**.
-- Correlate PowerShell activity with parent and child processes.
-- Review Script Block Logging events when available.
-- Correlate with network connections and subsequent process activity.
-- Maintain detection rules for PowerShell abuse.
+| Táctica | Técnica |
+|---|---|
+| Execution | **T1059.001 — PowerShell** |
+| Defense Evasion | **T1027.010 — Command Obfuscation** |
 
 ---
 
-# Lessons Learned
+## Recomendaciones
 
-- PowerShell is frequently used for legitimate administrative tasks.
-- The **-EncodedCommand** parameter should always receive additional investigation.
-- Threat Hunting provides the context necessary to determine whether an alert is isolated or part of a broader attack.
-- Correlating Sysmon telemetry with Wazuh detections significantly improves investigation quality.
-
----
-
-# Conclusion
-
-The Threat Hunting activity confirmed that the detected execution corresponded to a controlled laboratory simulation.
-
-No additional indicators of compromise were identified, allowing the activity to be classified as an isolated event generated for detection validation purposes.
-
-The investigation demonstrated the effectiveness of Sysmon telemetry and Wazuh correlation capabilities for identifying and contextualizing encoded PowerShell executions.
+- Continuar correlacionando `EncodedCommand` con procesos padre e hijos.
+- Revisar **PowerShell Script Block Logging** cuando esté disponible.
+- Correlacionar con conexiones de red y actividad posterior.
+- Diferenciar siempre entre evento observado y alerta generada.
+- Mantener búsquedas de hunting que permitan detectar variaciones de la misma técnica.
 
 ---
 
-# References
+## Lecciones aprendidas
 
-- Microsoft Sysmon
-- Wazuh Documentation
-- MITRE ATT&CK – T1059.001 (PowerShell)
-- MITRE ATT&CK – T1027 (Obfuscated Files or Information)
+- Una búsqueda amplia puede encontrar más eventos que una regla específica.
+- La relación **parent-child process** puede ser determinante para una detección.
+- Base64 representa codificación, no cifrado.
+- Threat Hunting aporta contexto que una alerta aislada no proporciona.
+- La evidencia debe mantenerse separada por prueba antes de correlacionarse.
 
 ---
 
-# Related Projects
+## Conclusión
 
-- WI-001 – PowerShell EncodedCommand
-- DR-001 – Validate Wazuh Rule 92057
-- CS-001 – Investigation PowerShell EncodedCommand
+La actividad de Threat Hunting confirmó que el escenario estuvo compuesto por **tres pruebas controladas relacionadas**, no por una única ejecución repetida de forma idéntica.
+
+Se identificaron tres eventos con `EncodedCommand`, de los cuales uno cumplió las condiciones necesarias para generar **Wazuh Rule 92057**. No se identificaron indicadores adicionales de compromiso dentro del alcance analizado.
+
+El ejercicio demuestra la utilidad conjunta de **Sysmon**, **Wazuh**, **Detection Validation** y **Threat Hunting** para comprender por qué determinados eventos generan alertas y otros no.
+
+---
+
+## Proyectos relacionados
+
+- **WI-001** — PowerShell EncodedCommand.
+- **DR-001** — Validate Wazuh Rule 92057.
+- **CS-001** — PowerShell EncodedCommand Investigation.
